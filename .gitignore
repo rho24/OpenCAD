@@ -47,3 +47,5 @@ _ReSharper*/
 
 opengl32.pdb
 opengl32.dll
+
+*.ncrunch*
