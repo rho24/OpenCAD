@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,6 +60,7 @@
     <Compile Include="Maths\Plane.cs" />
     <Compile Include="Maths\Vector3.cs" />
     <Compile Include="Meshing\Edge.cs" />
+    <Compile Include="Meshing\Loaders\STL.cs" />
     <Compile Include="Meshing\MeshExtensions.cs" />
     <Compile Include="Meshing\Face.cs" />
     <Compile Include="Meshing\HalfEdgeFace.cs" />

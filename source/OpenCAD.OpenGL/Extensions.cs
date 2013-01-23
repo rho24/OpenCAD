@@ -7,6 +7,12 @@ namespace OpenCAD.OpenGL
 {
     public static class Extensions
     {
+        public static Vector3 ToVector3(this Vect3 v)
+        {
+            return new Vector3((float)v.X, (float)v.Y, (float)v.Z);
+        }
+
+
         public static Vector4 ToVector4(this Color col)
         {
             return new Vector4(col.R/255f, col.G/255f, col.B/255f, col.A/255f);

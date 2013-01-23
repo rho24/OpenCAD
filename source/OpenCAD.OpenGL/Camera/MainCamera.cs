@@ -16,7 +16,7 @@ namespace OpenCAD.OpenGL.Camera
             Eye = Vect3.Zero;
             Target = Vect3.Zero;
             Up = Vect3.UnitY;
-            Eye = new Vect3(0.0f, 0.0f, 80.0f);
+            Eye = new Vect3(0.0f, 0.0f, 5.0f);
         }
 
         public double Near { get; private set; }
