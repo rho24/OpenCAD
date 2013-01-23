@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ACD5631C-CAF2-4352-AD3B-32BBCAF0FC63}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{BD59FC7B-07D2-4B46-BAEF-EF2CF1324CDA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenCAD.Core</RootNamespace>
-    <AssemblyName>OpenCAD.Core</AssemblyName>
+    <RootNamespace>OpenCAD.OpenGL</RootNamespace>
+    <AssemblyName>OpenCAD.OpenGL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,8 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>..\..\lib\OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,37 +45,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contexts\Context2D.cs" />
-    <Compile Include="Contexts\Context3D.cs" />
-    <Compile Include="Contexts\IContext.cs" />
-    <Compile Include="CSG\CSGNode.cs" />
-    <Compile Include="CSG\Extensions.cs" />
-    <Compile Include="CSG\ICSGSolid.cs" />
-    <Compile Include="CSG\Polygon.cs" />
-    <Compile Include="CSG\Vertex.cs" />
-    <Compile Include="Drawing\Constraining\IHasConstraints.cs" />
-    <Compile Include="Drawing\DrawingPoint.cs" />
-    <Compile Include="Drawing\IDrawingElement.cs" />
+    <Compile Include="Buffers\IBuffer.cs" />
+    <Compile Include="Buffers\UBO.cs" />
+    <Compile Include="Buffers\VAO.cs" />
+    <Compile Include="Buffers\VBO.cs" />
+    <Compile Include="Camera\MainCamera.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Maths\Angle.cs" />
-    <Compile Include="Maths\Axis.cs" />
-    <Compile Include="Maths\Mat4.cs" />
-    <Compile Include="Maths\MathsHelper.cs" />
-    <Compile Include="Maths\Matrix.cs" />
-    <Compile Include="Maths\Plane.cs" />
-    <Compile Include="Maths\Vector3.cs" />
-    <Compile Include="Meshing\Edge.cs" />
-    <Compile Include="Meshing\MeshExtensions.cs" />
-    <Compile Include="Meshing\Face.cs" />
-    <Compile Include="Meshing\HalfEdgeFace.cs" />
-    <Compile Include="Meshing\HalfEdge.cs" />
-    <Compile Include="Meshing\IFace.cs" />
-    <Compile Include="Meshing\Mesh.cs" />
-    <Compile Include="Meshing\Vertex.cs" />
+    <Compile Include="Camera\ICamera.cs" />
+    <Compile Include="OpenGLVertex.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Shapes\Cube.cs" />
+    <Compile Include="Shaders\BaseShaderProgram.cs" />
+    <Compile Include="Shaders\FlatShaderProgram.cs" />
+    <Compile Include="Shaders\IShaderProgram.cs" />
+    <Compile Include="Window.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenCAD.Core\OpenCAD.Core.csproj">
+      <Project>{acd5631c-caf2-4352-ad3b-32bbcaf0fc63}</Project>
+      <Name>OpenCAD.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,18 +1,28 @@
 ﻿using System;
+using System.Diagnostics;
 using NUnit.Framework;
-using OpenCad.Core;
-using OpenCad.Core.Maths;
-using OpenCad.Core.Meshing;
-using OpenCad.Core.Shapes;
+using OpenCAD.Core;
+using OpenCAD.Core.Maths;
+using OpenCAD.Core.Meshing;
+using OpenCAD.Core.Shapes;
 
 namespace OpenCAD.Test.Meshing
 {
     [TestFixture]
     public class MeshTests
     {
+        [Test]
         public void ConstructorTest()
         {
-            var m = new Cube(Vector3.Zero, 1).ToMesh();
+            var m = new Cube(Vect3.Zero, 1).ToMesh();
+            foreach (var face in m.Faces)
+            {
+                foreach (var halfEdge in face.HalfEdges)
+                {
+                    Debug.WriteLine(halfEdge);
+                }
+            }
+
         }
     }
 }

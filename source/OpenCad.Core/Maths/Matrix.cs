@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenCAD.Core.Meshing
+namespace OpenCAD.Core.Maths
 {
-    public class Face
+    public class Matrix
     {
 
     }

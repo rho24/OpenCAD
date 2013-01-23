@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace OpenCAD.Core.Meshing
 {
-    public class Face
+    public class IFace
     {
-
+       // IEnumerable<> 
     }
 }

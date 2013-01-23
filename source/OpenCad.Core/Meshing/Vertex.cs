@@ -1,11 +1,11 @@
-using OpenCad.Core.Maths;
+using OpenCAD.Core.Maths;
 
-namespace OpenCad.Core.Meshing
+namespace OpenCAD.Core.Meshing
 {
-    public class Vertex : Vector3
+    public class Vertex : Vect3
     {
         public HalfEdge Edge { get; set; }
-        public Vertex(Vector3 position)
+        public Vertex(Vect3 position)
             : base(position)
         {
 

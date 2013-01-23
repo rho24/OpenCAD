@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OpenCAD.Core")]
+[assembly: AssemblyTitle("OpenCAD.OpenGL")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OpenCAD.Core")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyProduct("OpenCAD.OpenGL")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("218c89b6-a40d-4d60-a383-f6d2fb320306")]
+[assembly: Guid("a5d1922c-57cc-4a99-9943-da08732776be")]
 
 // Version information for an assembly consists of the following four values:
 //

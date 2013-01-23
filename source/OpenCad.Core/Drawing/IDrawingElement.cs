@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenCAD.Core.Meshing
+namespace OpenCAD.Core.Drawing
 {
-    public class Face
+    public class IDrawingElement
     {
-
     }
 }

@@ -50,9 +50,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenCad.Core\OpenCad.Core.csproj">
-      <Project>{ACD5631C-CAF2-4352-AD3B-32BBCAF0FC63}</Project>
-      <Name>OpenCad.Core</Name>
+    <ProjectReference Include="..\OpenCAD.Core\OpenCAD.Core.csproj">
+      <Project>{acd5631c-caf2-4352-ad3b-32bbcaf0fc63}</Project>
+      <Name>OpenCAD.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OpenCad.Core.Meshing;
-using OpenCad.Core.Shapes;
+using OpenCAD.Core.Maths;
+using OpenCAD.Core.Meshing;
+using OpenCAD.Core.Shapes;
 
-namespace OpenCad.Core
+namespace OpenCAD.Core
 {
     public static class Extensions
     {
@@ -15,9 +16,9 @@ namespace OpenCad.Core
             return string.Format(format, args);
         }
 
-        public static Mesh ToMesh(this Cube c)
+        public static bool NearlyEquals(this double x, double y, double epsilon = 0.00000001)
         {
-            return new Mesh();
+            return MathsHelper.NearlyEquals(x, y, epsilon);
         }
     }
 }
