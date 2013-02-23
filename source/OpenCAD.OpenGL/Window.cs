@@ -58,10 +58,10 @@ namespace OpenCAD.OpenGL
             //solid = new Cube();
             var data = new List<OpenGLVertex>
             {
-                new OpenGLVertex {Position = new Vector3(-1, -1, 0), Colour = new Color4(0.137f, 0.121f, 0.125f, 0f).ToVector4()},
-                new OpenGLVertex {Position = new Vector3(1, -1, 0), Colour = Color4.Blue.ToVector4()},
-                new OpenGLVertex {Position = new Vector3(1, 1, 0), Colour = Color4.Blue.ToVector4()},
-                new OpenGLVertex {Position = new Vector3(-1, 1, 0), Colour = new Color4(0.137f, 0.121f, 0.125f, 0f).ToVector4()},
+                new OpenGLVertex {Position = new Vector3(-1, -1, 0), Colour  =new Color4(0.118f, 0.118f, 0.118f, 1f).ToVector4()},//bottom left
+                new OpenGLVertex {Position = new Vector3(1, -1, 0), Colour= new Color4(0.118f, 0.118f, 0.118f, 1f).ToVector4() }, //bottom right
+                new OpenGLVertex {Position = new Vector3(1, 1, 0), Colour = new Color4(0.176f, 0.176f, 0.188f, 1f).ToVector4() },//top right
+                new OpenGLVertex {Position = new Vector3(-1, 1, 0), Colour =  new Color4(0.176f, 0.176f, 0.188f, 1f).ToVector4()},//top left
             };
 
             _ubo = new CameraUBO();
@@ -122,7 +122,7 @@ namespace OpenCAD.OpenGL
 
             using (new Bind(_vao))
             {
-                //GL.DrawArrays(_vao.VBO.BeginMode, 0, _vao.VBO.Count);
+                GL.DrawArrays(_vao.VBO.BeginMode, 0, _vao.VBO.Count);
             }
 
             using (new Bind(_dotsvao))
