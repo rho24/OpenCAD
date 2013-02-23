@@ -1,0 +1,8 @@
+<avalondock:LayoutDocument x:Class="OpenCAD.GUI.TeaPotDemo"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:Wpf="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
+                           xmlns:avalondock="http://avalondock.codeplex.com"
+                           Title="Teapot">
+    <Wpf:OpenGLControl x:Name="context" />
+</avalondock:LayoutDocument>

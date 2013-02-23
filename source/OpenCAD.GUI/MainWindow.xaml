@@ -2,24 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:avalonDock="http://avalondock.codeplex.com"
-        Title="MainWindow" Height="388.179" Width="962.687">
+        xmlns:gui="clr-namespace:OpenCAD.GUI"
+        Title="MainWindow" Height="500" Width="800">
     <Grid>
         <avalonDock:DockingManager x:Name="dockingManager">
             <avalonDock:LayoutRoot>
                 <avalonDock:LayoutPanel Orientation="Horizontal">
                     <avalonDock:LayoutDocumentPaneGroup>
-                        <avalonDock:LayoutDocumentPane>
-                            <avalonDock:LayoutDocument Title="Doc1">
-                                <TextBox/>
-                            </avalonDock:LayoutDocument>
-                            <avalonDock:LayoutDocument Title="Doc2">
-                                <TextBox/>
-                            </avalonDock:LayoutDocument>
-                        </avalonDock:LayoutDocumentPane>
-                        <avalonDock:LayoutDocumentPane>
-                            <avalonDock:LayoutDocument Title="Doc3">
-                                <WindowsFormsHost />
-                            </avalonDock:LayoutDocument>
+                        <avalonDock:LayoutDocumentPane x:Name="mainDock">
+                                <gui:TeaPotDemo />
                         </avalonDock:LayoutDocumentPane>
                     </avalonDock:LayoutDocumentPaneGroup>
                     <avalonDock:LayoutAnchorablePaneGroup DockWidth="150" Orientation="Vertical">
@@ -45,7 +36,7 @@
                     <avalonDock:LayoutAnchorSide>
                         <avalonDock:LayoutAnchorGroup>
                             <avalonDock:LayoutAnchorable Title="Autohidden Content">
-                                <TextBox/>
+                                <Button x:Name="addDemo">Add teapot tab</Button>
                             </avalonDock:LayoutAnchorable>
                         </avalonDock:LayoutAnchorGroup>
                     </avalonDock:LayoutAnchorSide>
