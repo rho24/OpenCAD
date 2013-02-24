@@ -49,6 +49,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="AvalonDock">
       <HintPath>..\packages\AvalonDock.2.0.1368\lib\net40\AvalonDock.dll</HintPath>
     </Reference>
@@ -57,6 +63,12 @@
     </Reference>
     <Reference Include="AvalonDock.Themes.VS2010">
       <HintPath>..\packages\AvalonDock.2.0.1368\lib\net40\AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro">
+      <HintPath>..\packages\Caliburn.Micro.1.4.1\lib\net45\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Autofac">
+      <HintPath>..\packages\Caliburn.Micro.Autofac.1.5.0\lib\net40\Caliburn.Micro.Autofac.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\..\lib\OpenTK.dll</HintPath>
@@ -92,6 +104,10 @@
       <HintPath>..\packages\Rx-PlatformServices.2.0.20823\lib\Net45\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Caliburn.Micro.1.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -111,10 +127,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infrastructure\AutobinderTemplate.cs" />
+    <Compile Include="Infrastructure\AutobinderTemplateSelector.cs" />
+    <Compile Include="MvvmBootstrapper.cs" />
     <Compile Include="TeaPotDemo.xaml.cs">
       <DependentUpon>TeaPotDemo.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\TeapotView.xaml.cs">
+      <DependentUpon>TeapotView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -122,11 +145,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="ViewModels\TeapotViewModel.cs" />
+    <Compile Include="Views\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="TeaPotDemo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TeapotView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
