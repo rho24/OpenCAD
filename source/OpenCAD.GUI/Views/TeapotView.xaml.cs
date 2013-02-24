@@ -1,10 +1,12 @@
+using System;
+using System.Windows.Controls;
 using SharpGL;
 using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Primitives;
 
 namespace OpenCAD.GUI.Views
 {
-    public partial class TeapotView
+    public partial class TeapotView : UserControl, IDisposable
     {
         private readonly Teapot _teapot = new Teapot();
 
@@ -46,6 +48,11 @@ namespace OpenCAD.GUI.Views
             gl.Enable(OpenGL.GL_LIGHT0);
 
             gl.ShadeModel(OpenGL.GL_SMOOTH);
+        }
+
+        public void Dispose() {
+            context.OpenGLDraw -= OpenGlControlOpenGlDraw;
+            context.OpenGLInitialized -= OpenGLControl_OpenGLInitialized;
         }
     }
 }

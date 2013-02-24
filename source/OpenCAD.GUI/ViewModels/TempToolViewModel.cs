@@ -2,8 +2,7 @@
 
 namespace OpenCAD.GUI.ViewModels
 {
-    public class TempToolViewModel : Screen
+    public class TempToolViewModel : AvalonViewModelBaseBase
     {
-        public string Title { get; set; }
     }
 }

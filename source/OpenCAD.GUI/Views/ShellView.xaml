@@ -4,12 +4,14 @@
         xmlns:avalonDock="http://avalondock.codeplex.com"
         xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
         xmlns:Infrastructure="clr-namespace:OpenCAD.GUI.Infrastructure"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         Title="MainWindow" Height="500" Width="800">
     <DockPanel>
         <Menu DockPanel.Dock="Top" IsMainMenu="True">
             <MenuItem Header="_FILE">
                 <MenuItem Name="AddTeapot" Header="_Add Teapot"></MenuItem>
                 <MenuItem Name="AddTool" Header="Add Tool"></MenuItem>
+                <MenuItem Name="AddEventsDebug" Header="Add Events Debug"></MenuItem>
             </MenuItem>
             <MenuItem Header="_EDIT" />
             <MenuItem Header="_VIEW" />
@@ -20,9 +22,22 @@
                                    AnchorablesSource="{Binding Tools}"
                                    DocumentsSource="{Binding Tabs}"
                                    ActiveContent="{Binding ActiveDocument, Mode=TwoWay}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="DocumentClosed">
+                    <cal:ActionMessage MethodName="DocumentClosed">
+                        <cal:Parameter Value="$eventArgs" />
+                    </cal:ActionMessage>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="DocumentClosing">
+                    <cal:ActionMessage MethodName="DocumentClosing">
+                        <cal:Parameter Value="$eventArgs" />
+                    </cal:ActionMessage>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <avalonDock:DockingManager.LayoutItemContainerStyle>
                 <Style TargetType="{x:Type avalonDock:LayoutItem}">
                     <Setter Property="Title" Value="{Binding Model.Title}" />
+                    <Setter Property="CanClose" Value="{Binding Model.CanClose}" />
                 </Style>
             </avalonDock:DockingManager.LayoutItemContainerStyle>
             <avalonDock:DockingManager.LayoutItemTemplateSelector>
@@ -34,7 +49,6 @@
                     </Infrastructure:AutobinderTemplateSelector.Template>
                 </Infrastructure:AutobinderTemplateSelector>
             </avalonDock:DockingManager.LayoutItemTemplateSelector>
-
             <avalonDock:LayoutRoot>
                 <avalonDock:LayoutPanel Orientation="Horizontal">
                     <avalonDock:LayoutDocumentPane />
