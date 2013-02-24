@@ -4,5 +4,5 @@
                            xmlns:Wpf="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
                            xmlns:avalondock="http://avalondock.codeplex.com"
                            Title="Teapot">
-    <Wpf:OpenGLControl x:Name="context" />
+    <Wpf:OpenGLControl x:Name="context" RenderContextType="FBO" />
 </avalondock:LayoutDocument>

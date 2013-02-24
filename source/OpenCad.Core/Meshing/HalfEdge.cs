@@ -8,11 +8,11 @@ namespace OpenCAD.Core.Meshing
 {
     public class HalfEdge
     {
-        public Vertex ToVertex { get; set; }
+        public MeshVertex ToVertex { get; set; }
         public HalfEdge Opposite { get; set; }
         public HalfEdgeFace HalfEdgeFace { get; set; }
         public HalfEdge Next { get; set; }
-        public Vertex FromVertex { get { return Opposite.ToVertex; } }
+        public MeshVertex FromVertex { get { return Opposite.ToVertex; } }
 
         public HalfEdge()
         {

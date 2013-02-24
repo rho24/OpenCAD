@@ -10,7 +10,7 @@
                 <avalonDock:LayoutPanel Orientation="Horizontal">
                     <avalonDock:LayoutDocumentPaneGroup>
                         <avalonDock:LayoutDocumentPane x:Name="mainDock">
-                                <gui:TeaPotDemo />
+
                         </avalonDock:LayoutDocumentPane>
                     </avalonDock:LayoutDocumentPaneGroup>
                     <avalonDock:LayoutAnchorablePaneGroup DockWidth="150" Orientation="Vertical">

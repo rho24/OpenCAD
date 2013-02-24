@@ -1,0 +1,7 @@
+<avalondock:LayoutDocument xmlns:GUI="clr-namespace:OpenCAD.GUI"  x:Class="OpenCAD.GUI.CADDocument"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:Wpf="clr-namespace:SharpGL.WPF;assembly=SharpGL.WPF"
+                           xmlns:avalondock="http://avalondock.codeplex.com"
+                           Title="Teapot">
+</avalondock:LayoutDocument>

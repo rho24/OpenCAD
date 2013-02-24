@@ -10,16 +10,16 @@ namespace OpenCAD.Core.Meshing
     {
         public List<HalfEdge> Edges { get; private set; }
         public List<HalfEdgeFace> Faces { get; private set; }
-        public List<Vertex> Vertices { get; private set; }
+        public List<MeshVertex> Vertices { get; private set; }
 
         public Mesh()
         {
             Edges = new List<HalfEdge>();
             Faces = new List<HalfEdgeFace>();
-            Vertices = new List<Vertex>();
+            Vertices = new List<MeshVertex>();
         }
 
-        public Mesh(List<HalfEdge> edges, List<HalfEdgeFace> faces, List<Vertex> vertices)
+        public Mesh(List<HalfEdge> edges, List<HalfEdgeFace> faces, List<MeshVertex> vertices)
         {
             Edges = edges;
             Faces = faces;
@@ -55,25 +55,25 @@ namespace OpenCAD.Core.Meshing
     {
         public readonly List<HalfEdge> Edges;
         public List<HalfEdgeFace> Faces;
-        public List<Vertex> Vertices;
+        public List<MeshVertex> Vertices;
 
 
         public Meshold()
         {
             Edges = new List<HalfEdge>();
             Faces = new List<HalfEdgeFace>();
-            Vertices = new List<Vertex>();
+            Vertices = new List<MeshVertex>();
 
 
             double size = 1.0;
-            var v0 = new Vertex(new Vect3(size / 2.0, -size / 2.0, size / 2.0));
-            var v1 = new Vertex(new Vect3(-size / 2.0, -size / 2.0, size / 2.0));
-            var v2 = new Vertex(new Vect3(-size / 2.0, -size / 2.0, -size / 2.0));
-            var v3 = new Vertex(new Vect3(size / 2.0, -size / 2.0, -size / 2.0));
-            var v4 = new Vertex(new Vect3(size / 2.0, size / 2.0, size / 2.0));
-            var v5 = new Vertex(new Vect3(-size / 2.0, size / 2.0, size / 2.0));
-            var v6 = new Vertex(new Vect3(-size / 2.0, size / 2.0, -size / 2.0));
-            var v7 = new Vertex( new Vect3(0, 0, 0));
+            var v0 = new MeshVertex(new Vect3(size / 2.0, -size / 2.0, size / 2.0));
+            var v1 = new MeshVertex(new Vect3(-size / 2.0, -size / 2.0, size / 2.0));
+            var v2 = new MeshVertex(new Vect3(-size / 2.0, -size / 2.0, -size / 2.0));
+            var v3 = new MeshVertex(new Vect3(size / 2.0, -size / 2.0, -size / 2.0));
+            var v4 = new MeshVertex(new Vect3(size / 2.0, size / 2.0, size / 2.0));
+            var v5 = new MeshVertex(new Vect3(-size / 2.0, size / 2.0, size / 2.0));
+            var v6 = new MeshVertex(new Vect3(-size / 2.0, size / 2.0, -size / 2.0));
+            var v7 = new MeshVertex( new Vect3(0, 0, 0));
 
             var face1 = new HalfEdgeFace();
             var face2 = new HalfEdgeFace();
