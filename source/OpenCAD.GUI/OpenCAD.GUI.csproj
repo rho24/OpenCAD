@@ -123,9 +123,6 @@
     </Compile>
     <Compile Include="Extensions.cs" />
     <Compile Include="ModelControl.cs" />
-    <Compile Include="TeaPotDemo.xaml.cs">
-      <DependentUpon>TeaPotDemo.xaml</DependentUpon>
-    </Compile>
     <Page Include="CADControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -146,10 +143,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="TeaPotDemo.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

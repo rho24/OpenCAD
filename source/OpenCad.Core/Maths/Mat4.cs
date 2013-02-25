@@ -300,6 +300,28 @@ namespace OpenCAD.Core.Maths
                 });
         }
 
+
+        /*
+        public static Mat4 Rotate(Vect3 axis, Angle theta)
+        {
+            return new Mat4(new[,]
+                {
+                    {theta.Cos() + axis.X * axis.X * (1 - theta.Cos()), axis.X*axis.Y*(1 - theta.Cos()) - axis.Z * theta.Sin(), axis.X * axis.Z * (1 - theta.Cos()) + axis.Y*theta.Sin(), 0.0},
+                    {axis.Y*axis.X*(1-theta.Cos())+axis.Z*theta.Sin(), theta.Cos() + axis.Y * axis.Y * (1 - theta.Cos()), axis.Y * axis.Z * (1 - theta.Cos()) - axis.X*theta.Sin(), 0.0},
+                    {axis.Z*axis.X*(1-theta.Cos())-axis.Y*theta.Sin(), axis.Z*axis.Y*(1 - theta.Cos()) + axis.X * theta.Sin(), theta.Cos() + axis.Z * axis.Z * (1 - theta.Cos()), 0.0},
+                    {0.0, 0.0, 0.0, 1.0}
+                });
+        }
+
+        public static Mat4 RotateNormal(Vect3 normal)
+        {
+            var axis = Vect3.UnitZ.CrossProduct(normal);
+            var angle = Vect3.UnitZ.DotProduct(normal)/(normal.Length);
+
+            return Rotate(axis, Angle.FromRadians(angle));
+        }*/
+
+
         public override String ToString()
         {
             return "Matrix <4x4>:\n"

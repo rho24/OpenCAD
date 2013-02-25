@@ -20,7 +20,7 @@ namespace OpenCAD.Core.Meshing
         }
         public override string ToString()
         {
-            return "HalfEdge<From:{0},To{1}>".Format(ToVertex,FromVertex);
+            return "HalfEdge<From:{0},To{1}>".fmt(ToVertex,FromVertex);
         }
     }
 }

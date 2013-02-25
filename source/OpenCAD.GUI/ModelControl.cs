@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using OpenCAD.Core;
 using OpenCAD.Core.Graphics;
 using OpenCAD.Core.Maths;
 using OpenCAD.Core.Modeling;
@@ -12,6 +15,7 @@ using OpenCAD.GUI.Buffers;
 using SharpGL;
 using SharpGL.Enumerations;
 using SharpGL.SceneGraph;
+using Point = System.Windows.Point;
 
 namespace OpenCAD.GUI
 {
@@ -24,32 +28,38 @@ namespace OpenCAD.GUI
         private int _projectionUniform;
 
 
-        private VBO _vbo;
-        private VAO _vao;
 
         private IShaderProgram _shader;
         private ICamera _camera;
 
         public ModelControl(IModel model)
         {
-
             _model = model;
-
             MouseWheel += (s, e) => _camera.View *= Mat4.Translate(0, 0, e.Delta / 120.0);
             MouseDown += context_MouseDown;
-
+            MouseMove += ModelControl_MouseMove;
         }
+
+        void ModelControl_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var current = e.GetPosition(this) - new Point(ActualWidth / 2.0, ActualHeight / 2.0);
+           // _camera.View *= Mat4.RotateZ(Angle.FromDegrees(1));
+        }
+
         void context_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            _camera.View *= Mat4.Translate(0, 0, 10 / 120.0);
+
+           // _camera.View *= Mat4.Translate(0, 0, 10 / 120.0);
         }
 
-
+        private CoordFBO coordFBO;
+        private PlaneFBO planeFBO;
         public override void OnLoad(OpenGL gl)
         {
-            gl.Enable(OpenGL.GL_DEPTH_TEST);
             gl.Enable(OpenGL.GL_CULL_FACE);
             gl.Enable(OpenGL.GL_DEPTH_TEST);
+            gl.Enable(OpenGL.GL_BLEND);
+            gl.BlendFunc(BlendingSourceFactor.SourceAlpha, BlendingDestinationFactor.OneMinusSourceAlpha);
 
             _camera = new BaseCamera();
             _shader = new BasicShader(gl);
@@ -58,6 +68,76 @@ namespace OpenCAD.GUI
             _viewUniform = gl.GetUniformLocation(_shader.Handle, "View");
             _projectionUniform = gl.GetUniformLocation(_shader.Handle, "Projection");
 
+            coordFBO = new CoordFBO(gl,_shader);
+            planeFBO = new PlaneFBO(gl, _shader);
+        }
+
+        public override void OnUpdate(OpenGL gl)
+        {
+            _camera.View *= Mat4.RotateY(Angle.FromDegrees(0.5)) * Mat4.RotateZ(Angle.FromDegrees(0.5));
+
+            using (new Bind(_shader))
+            {
+                gl.UniformMatrix4(_viewUniform, 1, false, _camera.View.ToColumnMajorArray());
+            }
+        }
+
+        public override void OnRender(OpenGL gl)
+        {
+            gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
+            gl.ClearColor(0.137f, 0.121f, 0.125f, 0f);
+            
+            foreach (var csys in _model.Features.OfType<CoordinateSystem>())
+            {
+                _camera.Model = csys.Transform;
+                using (new Bind(_shader))
+                {
+                    gl.UniformMatrix4(_modelUniform, 1, false, _camera.Model.ToColumnMajorArray());
+                }
+                coordFBO.Render();
+            }
+
+            foreach (var plane in _model.Features.OfType<DatumPlane>())
+            {
+                _camera.Model = plane.Transform;
+                using (new Bind(_shader))
+                {
+                    gl.UniformMatrix4(_modelUniform, 1, false, _camera.Model.ToColumnMajorArray());
+                }
+                planeFBO.Render();
+            }
+        }
+
+        public override void OnResize(OpenGL gl, int width, int height)
+        {
+            if (width == -1 || height == -1) return;
+            using (new Bind(_shader))
+            {
+                _camera.Resize(width, height);
+                gl.UniformMatrix4(_projectionUniform, 1, false, _camera.Projection.ToColumnMajorArray());
+            }
+        }
+    }
+
+    public class BasicShader : BaseShader
+    {
+        public BasicShader(OpenGL gl)
+            : base(gl, "Basic.vert", "Basic.frag")
+        {
+        }
+    }
+
+
+    public class CoordFBO
+    {
+        private readonly IShaderProgram _shader;
+
+        private VBO _vbo;
+        private VAO _vao;
+
+        public CoordFBO(OpenGL gl,IShaderProgram shader)
+        {
+            _shader = shader;
             var data = new List<Vert>();
             const float size = 10f;
             data.Add(new Vert(new Vect3(0, 0, 0), Vect3.Zero, Color.Blue.ToVector4()));
@@ -71,51 +151,51 @@ namespace OpenCAD.GUI
 
             _vbo = new VBO(gl, BeginMode.Lines, data);
             _vao = new VAO(gl, _shader, _vbo);
-
-
         }
 
-        public override void OnUpdate(OpenGL gl)
+        public void Render()
         {
-            using (new Bind(_shader))
-            {
-                gl.UniformMatrix4(_viewUniform, 1, false, _camera.View.ToColumnMajorArray());
-            }
+            _vao.Render();
         }
-
-        public override void OnRender(OpenGL gl)
-        {
-            gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
-            gl.ClearColor(0.137f, 0.121f, 0.125f, 0f);
-
-            foreach (var csys in _model.Features.OfType<CoordinateSystem>())
-            {
-                using (new Bind(_shader))
-                {
-                    _camera.Model = csys.Transform;
-                    gl.UniformMatrix4(_modelUniform, 1, false, _camera.Model.ToColumnMajorArray());
-                }
-                _vao.Render();
-            }
-        }
-
-        public override void OnResize(OpenGL gl)
-        {
-            using (new Bind(_shader))
-            {
-                _camera.Resize((int)ActualWidth, (int)ActualHeight);
-                gl.UniformMatrix4(_projectionUniform, 1, false, _camera.Projection.ToColumnMajorArray());
-            }
-        }
-
-
     }
 
-    public class BasicShader : BaseShader
+
+    public class PlaneFBO
     {
-        public BasicShader(OpenGL gl)
-            : base(gl, "Basic.vert", "Basic.frag")
+        private readonly OpenGL _gl;
+        private readonly IShaderProgram _shader;
+        private VBO _vbo;
+        private VAO _vao;
+        public PlaneFBO(OpenGL gl, IShaderProgram shader)
         {
+            _gl = gl;
+            _shader = shader;
+            var data = new List<Vert>();
+            const float size = 20f;
+            var basecolour = Color.FromArgb(50, 0, 112, 204).ToVector4();
+            data.Add(new Vert(new Vect3(-size / 2.0, -size / 2.0, 0), Vect3.Zero, basecolour));
+            data.Add(new Vert(new Vect3(size / 2.0, -size / 2.0, 0), Vect3.Zero, basecolour));
+            data.Add(new Vert(new Vect3(size / 2.0, size / 2.0, 0), Vect3.Zero, basecolour));
+            data.Add(new Vert(new Vect3(-size / 2.0, size / 2.0, 0), Vect3.Zero, basecolour));
+
+
+
+            data.Add(new Vert(new Vect3(-size / 2.0, size / 2.0, 0), Vect3.Zero, basecolour));
+            data.Add(new Vert(new Vect3(size / 2.0, size / 2.0, 0), Vect3.Zero, basecolour));
+            data.Add(new Vert(new Vect3(size / 2.0, -size / 2.0, 0), Vect3.Zero, basecolour));
+            data.Add(new Vert(new Vect3(-size / 2.0, -size / 2.0, 0), Vect3.Zero, basecolour));
+
+
+
+
+
+            _vbo = new VBO(gl, BeginMode.Quads, data);
+            _vao = new VAO(gl, _shader, _vbo);
+        }
+
+        public void Render()
+        {
+            _vao.Render();
         }
     }
 }

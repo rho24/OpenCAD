@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
@@ -28,35 +29,37 @@ namespace OpenCAD.GUI
     public abstract partial class CADControl:UserControl
     {
         public OpenGL GL;
-        DispatcherTimer timer;
-        private readonly IObservable<Int64> _timer;
+        readonly DispatcherTimer _timer;
+        private Stopwatch _sw = new Stopwatch();
+        public double FPS;
 
-        public CADControl()
+        protected CADControl()
         {
             InitializeComponent();
             GL = new OpenGL();
 
             SizeChanged += CADControlSizeChanged;
 
-            timer = new DispatcherTimer();
-            timer.Tick += Tick;
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            _timer = new DispatcherTimer();
+            _timer.Tick += Tick;
+            _timer.Interval = new TimeSpan(0, 0, 0, 0, 10);
         }
 
         public abstract void OnLoad(OpenGL gl);
         public abstract void OnUpdate(OpenGL gl);
         public abstract void OnRender(OpenGL gl);
-        public abstract void OnResize(OpenGL gl);
+        public abstract void OnResize(OpenGL gl, int width, int height);
 
         void CADControlSizeChanged(object sender, SizeChangedEventArgs e)
         {
             lock (GL)
             {
+                GL.MakeCurrent();
                 var width = (int)e.NewSize.Width;
                 var height = (int)e.NewSize.Height;
                 GL.SetDimensions(width, height);
                 GL.Viewport(0, 0, width, height);
-                OnResize(GL);
+                OnResize(GL,(int) e.NewSize.Width,(int) e.NewSize.Height);
             }
         }
 
@@ -68,33 +71,34 @@ namespace OpenCAD.GUI
                 GL.Create(RenderContextType.FBO, 1, 1, 32, null);
             }
             OnLoad(GL);
-            timer.Start();
+            _timer.Start();
         }
 
         private void Tick(object sender, EventArgs eventArgs)
         {
             lock (GL)
             {
+                _sw.Restart();
                 GL.MakeCurrent();
 
                 OnUpdate(GL);
-
                 OnRender(GL);
                 
                 GL.Blit(IntPtr.Zero);
 
-                var provider = GL.RenderContextProvider as SharpGL.RenderContextProviders.FBORenderContextProvider;
-                if (provider != null)
-                {
-                    var newFormatedBitmapSource = new FormatConvertedBitmap();
-                    newFormatedBitmapSource.BeginInit();
+                var provider = GL.RenderContextProvider as FBORenderContextProvider;
+                if (provider == null) return;
+                var newFormatedBitmapSource = new FormatConvertedBitmap();
+                newFormatedBitmapSource.BeginInit();
 
-                    newFormatedBitmapSource.Source = BitmapConversion.HBitmapToBitmapSource(provider.InternalDIBSection.HBitmap);
-                    newFormatedBitmapSource.DestinationFormat = PixelFormats.Rgb24;
-                    newFormatedBitmapSource.EndInit();
+                newFormatedBitmapSource.Source = BitmapConversion.HBitmapToBitmapSource(provider.InternalDIBSection.HBitmap);
+                newFormatedBitmapSource.DestinationFormat = PixelFormats.Rgb24;
+                newFormatedBitmapSource.EndInit();
 
-                    image.Source = newFormatedBitmapSource;
-                }
+                image.Source = newFormatedBitmapSource;
+
+                _sw.Stop();
+                FPS = 1000.0 / _sw.Elapsed.TotalMilliseconds;    
             }
         }
     }

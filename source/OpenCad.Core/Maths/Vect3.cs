@@ -144,7 +144,7 @@ namespace OpenCAD.Core.Maths
 
         public override string ToString()
         {
-            return "Vector3({0},{1},{2})".Format(X, Y, Z);
+            return "Vector3({0},{1},{2})".fmt(X, Y, Z);
         }
     }
 }

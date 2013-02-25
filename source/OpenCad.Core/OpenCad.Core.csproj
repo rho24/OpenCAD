@@ -56,10 +56,12 @@
     <Compile Include="Graphics\Vert.cs" />
     <Compile Include="Maths\Angle.cs" />
     <Compile Include="Maths\Axis.cs" />
+    <Compile Include="Maths\AxisAngle.cs" />
     <Compile Include="Maths\Mat4.cs" />
     <Compile Include="Maths\MathsHelper.cs" />
     <Compile Include="Maths\Matrix.cs" />
     <Compile Include="Maths\Plane.cs" />
+    <Compile Include="Maths\Quat.cs" />
     <Compile Include="Maths\Vect4.cs" />
     <Compile Include="Maths\Vect3.cs" />
     <Compile Include="Meshing\Edge.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="Meshing\Mesh.cs" />
     <Compile Include="Meshing\MeshVertex.cs" />
     <Compile Include="Modeling\Datums\CoordinateSystem.cs" />
+    <Compile Include="Modeling\Datums\DatumPlane.cs" />
     <Compile Include="Modeling\Datums\IDatum.cs" />
     <Compile Include="Modeling\IElement.cs" />
     <Compile Include="Modeling\Features\IFeature.cs" />
@@ -82,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BREP\" />
+    <Folder Include="Import\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
