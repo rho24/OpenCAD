@@ -29,7 +29,7 @@ namespace OpenCAD.GUI.ViewModels
         public ShellViewModel(IEventAggregator eventAggregator, MenuViewModel menu) {
             _eventAggregator = eventAggregator;
             Tabs = new BindableCollection<PropertyChangedBase>();
-            Tools = new BindableCollection<PropertyChangedBase>() {new EventAggregatorDebugViewModel(eventAggregator) {Title = "Event Debugger"}};
+            Tools = new BindableCollection<PropertyChangedBase> {new EventAggregatorDebugViewModel(eventAggregator) {Title = "Event Debugger"}};
             Menu = menu;
 
             InitializeEvents();
