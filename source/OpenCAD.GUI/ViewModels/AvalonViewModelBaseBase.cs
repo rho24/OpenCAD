@@ -2,7 +2,7 @@
 
 namespace OpenCAD.GUI.ViewModels
 {
-    public abstract class AvalonViewModelBaseBase : Screen
+    public abstract class AvalonViewModelBaseBase : PropertyChangedBase
     {
         public string Title { get; set; }
     }

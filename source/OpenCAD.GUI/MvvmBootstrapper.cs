@@ -1,5 +1,5 @@
-﻿using Autofac;
-using Caliburn.Micro;
+﻿using System.Reflection;
+using Autofac;
 using Caliburn.Micro.Autofac;
 using OpenCAD.GUI.ViewModels;
 
@@ -7,11 +7,14 @@ namespace OpenCAD.GUI
 {
     public class MvvmBootstrapper : AutofacBootstrapper<ShellViewModel>
     {
-        protected override void ConfigureContainer(ContainerBuilder builder)
-        {
-            base.ConfigureContainer(builder);
+        protected override void ConfigureBootstrapper() {
+            base.ConfigureBootstrapper();
+            AutoSubscribeEventAggegatorHandlers = true;
+        }
 
-            builder.RegisterType<EventAggregator>().AsSelf().SingleInstance();
+        protected override void OnUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            base.OnUnhandledException(sender, e);
         }
     }
 }

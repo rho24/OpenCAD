@@ -7,12 +7,12 @@ using OpenCAD.GUI.Messages;
 
 namespace OpenCAD.GUI.ViewModels
 {
-    public class ShellViewModel : Conductor<Screen>
+    public class ShellViewModel : Conductor<Screen>, IHandle<AddTabViewCommand>, IHandle<AddToolViewCommand>
     {
-        private readonly EventAggregator _eventAggregator;
-        private Screen _activeDocument;
+        private readonly IEventAggregator _eventAggregator;
+        private PropertyChangedBase _activeDocument;
 
-        public Screen ActiveDocument {
+        public PropertyChangedBase ActiveDocument {
             get { return _activeDocument; }
             set {
                 if (Equals(value, _activeDocument)) return;
@@ -21,15 +21,27 @@ namespace OpenCAD.GUI.ViewModels
             }
         }
 
-        public BindableCollection<Screen> Tabs { get; set; }
-        public BindableCollection<Screen> Tools { get; set; }
+        public BindableCollection<PropertyChangedBase> Tabs { get; set; }
+        public BindableCollection<PropertyChangedBase> Tools { get; set; }
+        public MenuViewModel Menu { get; set; }
 
-        public ShellViewModel(EventAggregator eventAggregator) {
+
+        public ShellViewModel(IEventAggregator eventAggregator, MenuViewModel menu) {
             _eventAggregator = eventAggregator;
-            Tabs = new BindableCollection<Screen>();
-            Tools = new BindableCollection<Screen>() {new EventAggregatorDebugViewModel(eventAggregator) {Title = "Event Debugger"}};
+            Tabs = new BindableCollection<PropertyChangedBase>();
+            Tools = new BindableCollection<PropertyChangedBase>() {new EventAggregatorDebugViewModel(eventAggregator) {Title = "Event Debugger"}};
+            Menu = menu;
 
             InitializeEvents();
+        }
+
+        public void Handle(AddTabViewCommand message) {
+            Tabs.Add(message.Model);
+            ActiveDocument = message.Model;
+        }
+
+        public void Handle(AddToolViewCommand message) {
+            Tools.Add(message.Model);
         }
 
         private void InitializeEvents() {
@@ -41,22 +53,6 @@ namespace OpenCAD.GUI.ViewModels
 
             toolsChanged.Where(e => e.EventArgs.Action == NotifyCollectionChangedAction.Add).Subscribe(a => _eventAggregator.Publish(new ToolAddedEvent {Args = a.EventArgs}));
             toolsChanged.Where(e => e.EventArgs.Action == NotifyCollectionChangedAction.Remove).Subscribe(a => _eventAggregator.Publish(new ToolRemovedEvent {Args = a.EventArgs}));
-        }
-
-        public void AddTeapot() {
-            var model = new TeapotViewModel {Title = "Teapot Demo"};
-            Tabs.Add(model);
-            ActiveDocument = model;
-        }
-
-        public void AddTool() {
-            var model = new TempToolViewModel {Title = "Temp tool"};
-            Tools.Add(model);
-        }
-
-        public void AddEventsDebug() {
-            var model = new EventAggregatorDebugViewModel(_eventAggregator) {Title = "Events"};
-            Tools.Add(model);
         }
 
         public void DocumentClosed(DocumentClosedEventArgs e) {

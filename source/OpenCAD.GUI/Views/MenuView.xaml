@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="OpenCAD.GUI.Views.MenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Menu DockPanel.Dock="Top" IsMainMenu="True">
+        <MenuItem Header="_FILE">
+            <MenuItem Name="AddTeapot" Header="_Add Teapot"></MenuItem>
+            <MenuItem Name="AddTool" Header="Add Tool"></MenuItem>
+            <MenuItem Name="AddEventsDebug" Header="Add Events Debug"></MenuItem>
+        </MenuItem>
+        <MenuItem Header="_EDIT" />
+        <MenuItem Header="_VIEW" />
+        <MenuItem Header="_WINDOW" />
+        <MenuItem Header="_HELP" />
+    </Menu>
+</UserControl>

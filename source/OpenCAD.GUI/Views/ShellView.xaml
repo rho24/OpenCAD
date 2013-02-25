@@ -7,17 +7,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         Title="MainWindow" Height="500" Width="800">
     <DockPanel>
-        <Menu DockPanel.Dock="Top" IsMainMenu="True">
-            <MenuItem Header="_FILE">
-                <MenuItem Name="AddTeapot" Header="_Add Teapot"></MenuItem>
-                <MenuItem Name="AddTool" Header="Add Tool"></MenuItem>
-                <MenuItem Name="AddEventsDebug" Header="Add Events Debug"></MenuItem>
-            </MenuItem>
-            <MenuItem Header="_EDIT" />
-            <MenuItem Header="_VIEW" />
-            <MenuItem Header="_WINDOW" />
-            <MenuItem Header="_HELP" />
-        </Menu>
+        <ContentControl Name="Menu" DockPanel.Dock="Top" />
         <avalonDock:DockingManager Name="Manager"
                                    AnchorablesSource="{Binding Tools}"
                                    DocumentsSource="{Binding Tabs}"
