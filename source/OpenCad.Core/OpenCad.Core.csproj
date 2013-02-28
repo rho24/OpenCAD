@@ -53,6 +53,7 @@
     <Compile Include="Drawing\IDrawingElement.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Graphics\ICamera.cs" />
+    <Compile Include="Graphics\OrthographicCamera.cs" />
     <Compile Include="Graphics\Vert.cs" />
     <Compile Include="Maths\Angle.cs" />
     <Compile Include="Maths\Axis.cs" />

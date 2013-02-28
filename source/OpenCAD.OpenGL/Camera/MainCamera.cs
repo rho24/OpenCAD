@@ -51,7 +51,7 @@ namespace OpenCAD.OpenGL.Camera
         {
             _width = width;
             _height = height;
-            Projection = Mat4.CreatePerspectiveFieldOfView(Math.PI / 4, _width / (float)_height, Near, Far);
+            Projection = Mat4.CreatePerspective(Math.PI / 4, _width / (float)_height, Near, Far);
         }
     }
 }

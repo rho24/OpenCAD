@@ -20,11 +20,19 @@ namespace OpenCAD.Core.Modeling.Datums
                     tangent0 = Normal.CrossProduct(Vect3.UnitY);
                 tangent0 = tangent0.Normalize();
                 var tangent1 = Normal.CrossProduct(tangent0).Normalize();
+                //return new Mat4(new[,]
+                //            {
+                //                {tangent0.X, tangent0.Y, tangent0.Z, 0.0f},
+                //                {tangent1.X, tangent1.Y, tangent1.Z, 0.0f},
+                //                {Normal.X, Normal.Y, Normal.Z, 0.0f},
+                //                {0.0, 0.0, 0.0, 1.0}
+                //            });
+
                 return new Mat4(new[,]
                             {
-                                {tangent0.X, tangent0.Y, tangent0.Z, 0.0f},
-                                {tangent1.X, tangent1.Y, tangent1.Z, 0.0f},
-                                {Normal.X, Normal.Y, Normal.Z, 0.0f},
+                                {tangent0.X, tangent1.X, Normal.X, 0.0f},
+                                {tangent0.Y, tangent1.Y, Normal.Y, 0.0f},
+                                {tangent0.Z, tangent1.Z, Normal.Z, 0.0f},
                                 {0.0, 0.0, 0.0, 1.0}
                             });
 

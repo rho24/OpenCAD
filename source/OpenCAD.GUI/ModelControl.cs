@@ -30,12 +30,20 @@ namespace OpenCAD.GUI
 
 
         private IShaderProgram _shader;
-        private ICamera _camera;
+        private OrthographicCamera _camera;
 
         public ModelControl(IModel model)
         {
             _model = model;
-            MouseWheel += (s, e) => _camera.View *= Mat4.Translate(0, 0, e.Delta / 120.0);
+            MouseWheel += (s, e) =>
+                {
+                    using (new Bind(_shader))
+                    {
+
+                        _camera.Scale += e.Delta/(120.0 * 2);
+                    }
+                    //_camera.View *= Mat4.Translate(0, 0, e.Delta / 120.0)
+                };
             MouseDown += context_MouseDown;
             MouseMove += ModelControl_MouseMove;
         }
@@ -61,7 +69,9 @@ namespace OpenCAD.GUI
             gl.Enable(OpenGL.GL_BLEND);
             gl.BlendFunc(BlendingSourceFactor.SourceAlpha, BlendingDestinationFactor.OneMinusSourceAlpha);
 
-            _camera = new BaseCamera();
+            _camera = new OrthographicCamera();
+            _camera.View *= Mat4.RotateY(Angle.FromDegrees(15));
+
             _shader = new BasicShader(gl);
 
             _modelUniform = gl.GetUniformLocation(_shader.Handle, "Model");
@@ -74,10 +84,13 @@ namespace OpenCAD.GUI
 
         public override void OnUpdate(OpenGL gl)
         {
-            _camera.View *= Mat4.RotateY(Angle.FromDegrees(0.5)) * Mat4.RotateZ(Angle.FromDegrees(0.5));
+            _camera.View *= Mat4.RotateX(Angle.FromDegrees(0.6));
+
 
             using (new Bind(_shader))
             {
+                _camera.Resize((int)ActualWidth, (int)ActualHeight);
+                gl.UniformMatrix4(_projectionUniform, 1, false, _camera.Projection.ToColumnMajorArray());
                 gl.UniformMatrix4(_viewUniform, 1, false, _camera.View.ToColumnMajorArray());
             }
         }

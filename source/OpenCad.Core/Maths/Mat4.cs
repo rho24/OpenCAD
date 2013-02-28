@@ -300,6 +300,17 @@ namespace OpenCAD.Core.Maths
                 });
         }
 
+        public static Mat4 Scale(double s)
+        {
+            return new Mat4(new[,]
+            {
+                {s, 0, 0, 0},
+                {0, s, 0, 0},
+                {0, 0, s, 0},
+                {0, 0, 0, 1}
+            });
+        }
+
 
         /*
         public static Mat4 Rotate(Vect3 axis, Angle theta)
@@ -413,7 +424,7 @@ namespace OpenCAD.Core.Maths
                 }) * Translate(-eye);
         }
 
-        public static Mat4 CreatePerspectiveFieldOfView(double fovy, double aspect, double zNear, double zFar)
+        public static Mat4 CreatePerspective(double fovy, double aspect, double zNear, double zFar)
         {
             if (fovy <= 0.0 || fovy > Math.PI)
                 throw new ArgumentOutOfRangeException("fovy");
@@ -437,5 +448,37 @@ namespace OpenCAD.Core.Maths
                     {0.0, 0.0, -1, 0.0}
                 });
         }
+
+
+
+        public static Mat4 CreateOrthographic(double xMin, double xMax, double yMin, double yMax, double zMin, double zMax)
+        {
+            return new Mat4(new[,]
+            {
+                {2.0f / (xMax - xMin), 0, 0, -((xMax + xMin)/(xMax - xMin))},
+                {0, 2.0f / (yMax - yMin), 0, -((yMax + yMin)/(yMax - yMin))},
+                {0, 0, -2.0f / (zMax - zMin), -((zMax + zMin)/(zMax - zMin))},
+                {0, 0, 0, 1}
+            });
+        }
+
+        /*
+        public static Mat4 CreateOrthographic(double width, double height, double near, double far)
+        {
+            var left = 0;
+            var right = width;
+            var top = 0;
+            var bottom = height;
+
+            return new Mat4(new[,]
+            {
+                {2.0/(right - left), 0, 0, -(right + left)/(right - left)},
+                {0, 2.0/(top - bottom), 0, -(top + bottom)/(top - bottom)},
+                {0, 0, -2.0/(far - near), - (far + near)/(far - near)},
+                {0, 0, 0, 1}
+            });
+        }
+        */
+
     }
 }

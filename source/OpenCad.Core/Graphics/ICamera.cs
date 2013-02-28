@@ -18,7 +18,7 @@ namespace OpenCAD.Core.Graphics
         void Resize(int width, int height);
     }
 
-    public class BaseCamera : ICamera
+    public abstract class BaseCamera : ICamera
     {
 
 
@@ -28,47 +28,18 @@ namespace OpenCAD.Core.Graphics
 
         public Mat4 MVP
         {
-            get { return Projection*View*Model; }
+            get { return Projection * View * Model; }
         }
 
         public Vect3 Eye { get; set; }
         public Vect3 Target { get; set; }
         public Vect3 Up { get; set; }
-        private int _width;
-        private int _height;
 
-        public double Near { get; private set; }
-        public double Far { get; private set; }
+        public double Near { get; protected set; }
+        public double Far { get; protected set; }
 
-        public  BaseCamera()
-        {
+        public abstract void Update(double delta);
+        public abstract void Resize(int width, int height);
 
-            Near = 1f;
-            Far = 500f;
-
-            Target = Vect3.Zero;
-            Up = Vect3.UnitY;
-
-            Eye = new Vect3(0, 0, 20);
-
-            Model = Mat4.Identity;
-            View = Mat4.LookAt(Eye, Target, Up);
-            Projection = Mat4.Identity;
-
-
-        }
-
-        public void Update(double delta)
-        {
-
-        }
-
-        public void Resize(int width, int height)
-        {
-            _width = width;
-            _height = height;
-            Projection = Mat4.CreatePerspectiveFieldOfView(Math.PI / 2, _width / (float)_height, Near, Far);
-
-        }
     }
 }
