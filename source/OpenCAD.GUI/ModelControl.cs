@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using OpenCAD.Core;
 using OpenCAD.Core.Graphics;
 using OpenCAD.Core.Maths;
 using OpenCAD.Core.Modeling;
 using OpenCAD.Core.Modeling.Datums;
+using OpenCAD.Core.Modeling.Sections;
 using OpenCAD.GUI.Buffers;
 using SharpGL;
 using SharpGL.Enumerations;
-using SharpGL.SceneGraph;
 using Point = System.Windows.Point;
 
 namespace OpenCAD.GUI
@@ -28,7 +22,7 @@ namespace OpenCAD.GUI
         private int _projectionUniform;
 
 
-
+        private SceneGraph _graph;
         private IShaderProgram _shader;
         private OrthographicCamera _camera;
 
@@ -39,29 +33,16 @@ namespace OpenCAD.GUI
                 {
                     using (new Bind(_shader))
                     {
-
                         _camera.Scale += e.Delta/(120.0 * 2);
                     }
-                    //_camera.View *= Mat4.Translate(0, 0, e.Delta / 120.0)
                 };
-            MouseDown += context_MouseDown;
-            MouseMove += ModelControl_MouseMove;
+           // MouseDown += ContextMouseDown;
+           // MouseMove += ModelControlMouseMove;
         }
 
-        void ModelControl_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            var current = e.GetPosition(this) - new Point(ActualWidth / 2.0, ActualHeight / 2.0);
-           // _camera.View *= Mat4.RotateZ(Angle.FromDegrees(1));
-        }
-
-        void context_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
-           // _camera.View *= Mat4.Translate(0, 0, 10 / 120.0);
-        }
-
-        private CoordFBO coordFBO;
-        private PlaneFBO planeFBO;
+        private CoordFBO _coordFBO;
+        private PlaneFBO _planeFBO;
+        private PointRenderer _points;
         public override void OnLoad(OpenGL gl)
         {
             gl.Enable(OpenGL.GL_CULL_FACE);
@@ -73,25 +54,38 @@ namespace OpenCAD.GUI
             _camera.View *= Mat4.RotateY(Angle.FromDegrees(15));
 
             _shader = new BasicShader(gl);
-
             _modelUniform = gl.GetUniformLocation(_shader.Handle, "Model");
             _viewUniform = gl.GetUniformLocation(_shader.Handle, "View");
             _projectionUniform = gl.GetUniformLocation(_shader.Handle, "Projection");
 
-            coordFBO = new CoordFBO(gl,_shader);
-            planeFBO = new PlaneFBO(gl, _shader);
+            _graph = new SceneGraph();
+            _graph.Nodes.Add(new CoordinateSystemLeaf(gl, _shader, _model.Features.OfType<CoordinateSystem>()));
+
+
+
+
+
+            _coordFBO = new CoordFBO(gl,_shader);
+            _planeFBO = new PlaneFBO(gl, _shader);
+
+            var data = new List<Vert>();
+            foreach (var section in _model.Features.OfType<Section>())
+            {
+                data.AddRange(section.Points.Select(point => new Vert((section.Location.Transform*Mat4.Translate(point.ToVect3())).ToVect3(), section.Location.Normal, Color.Yellow.ToVector4())));
+            }
+            _points = new PointRenderer(gl,_shader,data);
+            // gl.PolygonMode(FaceMode.FrontAndBack, PolygonMode.Lines);
         }
 
         public override void OnUpdate(OpenGL gl)
         {
-            _camera.View *= Mat4.RotateX(Angle.FromDegrees(0.6));
-
-
+           _camera.View *= Mat4.RotateX(Angle.FromDegrees(0.6));
             using (new Bind(_shader))
             {
                 _camera.Resize((int)ActualWidth, (int)ActualHeight);
-                gl.UniformMatrix4(_projectionUniform, 1, false, _camera.Projection.ToColumnMajorArray());
+                gl.UniformMatrix4(_modelUniform, 1, false, Mat4.Identity.ToColumnMajorArray());
                 gl.UniformMatrix4(_viewUniform, 1, false, _camera.View.ToColumnMajorArray());
+                gl.UniformMatrix4(_projectionUniform, 1, false, _camera.Projection.ToColumnMajorArray());
             }
         }
 
@@ -100,15 +94,19 @@ namespace OpenCAD.GUI
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
             gl.ClearColor(0.137f, 0.121f, 0.125f, 0f);
             
-            foreach (var csys in _model.Features.OfType<CoordinateSystem>())
-            {
-                _camera.Model = csys.Transform;
-                using (new Bind(_shader))
-                {
-                    gl.UniformMatrix4(_modelUniform, 1, false, _camera.Model.ToColumnMajorArray());
-                }
-                coordFBO.Render();
-            }
+
+            _graph.Render();
+
+
+            //foreach (var csys in _model.Features.OfType<CoordinateSystem>())
+            //{
+            //    _camera.Model = csys.Transform;
+            //    using (new Bind(_shader))
+            //    {
+            //        gl.UniformMatrix4(_modelUniform, 1, false, _camera.Model.ToColumnMajorArray());
+            //    }
+            //    _coordFBO.Render();
+            //}
 
             foreach (var plane in _model.Features.OfType<DatumPlane>())
             {
@@ -117,8 +115,26 @@ namespace OpenCAD.GUI
                 {
                     gl.UniformMatrix4(_modelUniform, 1, false, _camera.Model.ToColumnMajorArray());
                 }
-                planeFBO.Render();
+                _planeFBO.Render();
             }
+
+
+            gl.Disable(OpenGL.GL_DEPTH_TEST);
+            using (new Bind(_shader))
+            {
+                gl.UniformMatrix4(_modelUniform, 1, false, Mat4.Identity.ToColumnMajorArray());
+
+                gl.PointSize(10f);
+                gl.Begin(BeginMode.Points);
+                gl.Vertex(6, 0);
+                gl.End();
+            }
+
+
+            gl.PointSize(5f);
+            
+            _points.Render();
+            gl.Enable(OpenGL.GL_DEPTH_TEST);
         }
 
         public override void OnResize(OpenGL gl, int width, int height)
@@ -132,21 +148,13 @@ namespace OpenCAD.GUI
         }
     }
 
-    public class BasicShader : BaseShader
-    {
-        public BasicShader(OpenGL gl)
-            : base(gl, "Basic.vert", "Basic.frag")
-        {
-        }
-    }
-
 
     public class CoordFBO
     {
         private readonly IShaderProgram _shader;
 
-        private VBO _vbo;
-        private VAO _vao;
+        private readonly VBO _vbo;
+        private readonly VAO _vao;
 
         public CoordFBO(OpenGL gl,IShaderProgram shader)
         {
@@ -177,8 +185,8 @@ namespace OpenCAD.GUI
     {
         private readonly OpenGL _gl;
         private readonly IShaderProgram _shader;
-        private VBO _vbo;
-        private VAO _vao;
+        private readonly VBO _vbo;
+        private readonly VAO _vao;
         public PlaneFBO(OpenGL gl, IShaderProgram shader)
         {
             _gl = gl;
@@ -198,12 +206,63 @@ namespace OpenCAD.GUI
             data.Add(new Vert(new Vect3(size / 2.0, -size / 2.0, 0), Vect3.Zero, basecolour));
             data.Add(new Vert(new Vect3(-size / 2.0, -size / 2.0, 0), Vect3.Zero, basecolour));
 
-
-
-
-
             _vbo = new VBO(gl, BeginMode.Quads, data);
             _vao = new VAO(gl, _shader, _vbo);
+        }
+
+        public void Render()
+        {
+            _vao.Render();
+        }
+    }
+
+
+
+    public class PointRenderer
+    {
+        private readonly IShaderProgram _shader;
+
+        private readonly VBO _vbo;
+        private readonly VAO _vao;
+
+        public PointRenderer(OpenGL gl, IShaderProgram shader, IEnumerable<Vert> data)
+        {
+            _shader = shader;
+            _vbo = new VBO(gl, BeginMode.Points, data);
+            _vao = new VAO(gl, _shader, _vbo);
+        }
+
+        public void Render()
+        {
+            _vao.Render();
+        }
+    }
+
+
+    public class CoordinateSystemLeaf:ILeafNode
+    {
+        private readonly IShaderProgram _shader;
+        private readonly VAO _vao;
+        private Vect4 _edgecolour = Color.FromArgb(255, 0, 112, 204).ToVector4();
+        private Vect4 _basecolour = Color.FromArgb(50, 0, 112, 204).ToVector4();
+        private const float Size = 10f;
+
+        public CoordinateSystemLeaf(OpenGL gl, IShaderProgram shader, IEnumerable<CoordinateSystem> coordinateSystems)
+        {
+            _shader = shader;
+            var data = new List<Vert>();
+
+            foreach (var csys in coordinateSystems)
+            {
+                var origin = csys.Transform.ToVect3();
+                data.Add(new Vert(origin, Vect3.Zero, Color.Blue.ToVector4()));
+                data.Add(new Vert((csys.Transform * Mat4.Translate(new Vect3(Size, 0, 0))).ToVect3(), Vect3.Zero, Color.Blue.ToVector4()));
+                data.Add(new Vert(origin, Vect3.Zero, Color.Red.ToVector4()));
+                data.Add(new Vert((csys.Transform * Mat4.Translate(new Vect3(0, Size, 0))).ToVect3(), Vect3.Zero, Color.Red.ToVector4()));
+                data.Add(new Vert(origin, Vect3.Zero, Color.Green.ToVector4()));
+                data.Add(new Vert((csys.Transform * Mat4.Translate(new Vect3(0, 0, Size))).ToVect3(), Vect3.Zero, Color.Green.ToVector4()));
+            }
+            _vao = new VAO(gl, _shader, new VBO(gl, BeginMode.Lines, data));
         }
 
         public void Render()

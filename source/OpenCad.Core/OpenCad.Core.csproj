@@ -52,17 +52,19 @@
     <Compile Include="Drawing\DrawingPoint.cs" />
     <Compile Include="Drawing\IDrawingElement.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Graphics\BaseCamera.cs" />
     <Compile Include="Graphics\ICamera.cs" />
     <Compile Include="Graphics\OrthographicCamera.cs" />
+    <Compile Include="Graphics\SceneGraph.cs" />
     <Compile Include="Graphics\Vert.cs" />
     <Compile Include="Maths\Angle.cs" />
     <Compile Include="Maths\Axis.cs" />
     <Compile Include="Maths\AxisAngle.cs" />
     <Compile Include="Maths\Mat4.cs" />
     <Compile Include="Maths\MathsHelper.cs" />
-    <Compile Include="Maths\Matrix.cs" />
     <Compile Include="Maths\Plane.cs" />
     <Compile Include="Maths\Quat.cs" />
+    <Compile Include="Maths\Vect2.cs" />
     <Compile Include="Maths\Vect4.cs" />
     <Compile Include="Maths\Vect3.cs" />
     <Compile Include="Meshing\Edge.cs" />
@@ -81,6 +83,13 @@
     <Compile Include="Modeling\Features\IFeature.cs" />
     <Compile Include="Modeling\IModel.cs" />
     <Compile Include="Modeling\BasePart.cs" />
+    <Compile Include="Modeling\Sections\BaseEdge.cs" />
+    <Compile Include="Modeling\Sections\EdgeLine.cs" />
+    <Compile Include="Modeling\Sections\IEdge.cs" />
+    <Compile Include="Modeling\Sections\IEntity.cs" />
+    <Compile Include="Modeling\Sections\ISection.cs" />
+    <Compile Include="Modeling\Sections\Point.cs" />
+    <Compile Include="Modeling\Sections\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\Cube.cs" />
   </ItemGroup>

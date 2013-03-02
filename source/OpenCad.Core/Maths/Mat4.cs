@@ -333,6 +333,7 @@ namespace OpenCAD.Core.Maths
         }*/
 
 
+
         public override String ToString()
         {
             return "Matrix <4x4>:\n"
@@ -462,23 +463,7 @@ namespace OpenCAD.Core.Maths
             });
         }
 
-        /*
-        public static Mat4 CreateOrthographic(double width, double height, double near, double far)
-        {
-            var left = 0;
-            var right = width;
-            var top = 0;
-            var bottom = height;
 
-            return new Mat4(new[,]
-            {
-                {2.0/(right - left), 0, 0, -(right + left)/(right - left)},
-                {0, 2.0/(top - bottom), 0, -(top + bottom)/(top - bottom)},
-                {0, 0, -2.0/(far - near), - (far + near)/(far - near)},
-                {0, 0, 0, 1}
-            });
-        }
-        */
 
     }
 }

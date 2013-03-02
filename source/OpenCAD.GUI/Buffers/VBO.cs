@@ -49,11 +49,6 @@ namespace OpenCAD.GUI.Buffers
         {
             using (new Bind(this))
             {
-
-
-
-
-
                 var gldata = data.ToOpenGLVertices().ToArray();
                 Count = gldata.Count();
                 var vertsHandle = GCHandle.Alloc(gldata, GCHandleType.Pinned);

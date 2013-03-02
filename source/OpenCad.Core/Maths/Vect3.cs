@@ -144,7 +144,12 @@ namespace OpenCAD.Core.Maths
 
         public override string ToString()
         {
-            return "Vector3({0},{1},{2})".fmt(X, Y, Z);
+            return "Vect3({0},{1},{2})".fmt(X, Y, Z);
+        }
+
+        public static Vect3 Lerp(Vect3 start, Vect3 end, double percent)
+        {
+            return (start + percent * (end - start));
         }
     }
 }

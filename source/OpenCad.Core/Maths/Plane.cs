@@ -16,6 +16,25 @@ namespace OpenCAD.Core.Maths
         public double B { get { return Normal.Y; } }
         public double C { get { return Normal.Z; } }
 
+        public Mat4 Transform
+        {
+            get
+            {
+                var tangent0 = Normal.CrossProduct(Vect3.UnitX);
+                if (tangent0.DotProduct(tangent0) < 0.001)
+                    tangent0 = Normal.CrossProduct(Vect3.UnitY);
+                tangent0 = tangent0.Normalize();
+                var tangent1 = Normal.CrossProduct(tangent0).Normalize();
+                return new Mat4(new[,]
+                {
+                    {tangent0.X, tangent1.X, Normal.X, 0.0f},
+                    {tangent0.Y, tangent1.Y, Normal.Y, 0.0f},
+                    {tangent0.Z, tangent1.Z, Normal.Z, 0.0f},
+                    {0.0, 0.0, 0.0, 1.0}
+                });
+
+            }
+        }
         public Plane(Vect3 normal, double distance)
         {
             Normal = normal;

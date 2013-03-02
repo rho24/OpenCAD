@@ -42,7 +42,7 @@ namespace OpenCAD.GUI
 
             _timer = new DispatcherTimer();
             _timer.Tick += Tick;
-            _timer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            _timer.Interval = new TimeSpan(0, 0, 0, 0, 5);
         }
 
         public abstract void OnLoad(OpenGL gl);

@@ -109,6 +109,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Buffers\BasicShader.cs" />
     <Compile Include="Buffers\BaseShader.cs" />
     <Compile Include="Buffers\Bind.cs" />
     <Compile Include="Buffers\IBuffer.cs" />
@@ -200,6 +201,9 @@
       <Project>{acd5631c-caf2-4352-ad3b-32bbcaf0fc63}</Project>
       <Name>OpenCAD.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LeafNodes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
