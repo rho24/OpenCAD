@@ -7,6 +7,7 @@ using OpenCAD.Core.Modeling;
 using OpenCAD.Core.Modeling.Datums;
 using OpenCAD.Core.Modeling.Sections;
 using OpenCAD.GUI.Buffers;
+using OpenCAD.GUI.LeafNodes;
 using SharpGL;
 using SharpGL.Enumerations;
 using Point = System.Windows.Point;
@@ -40,8 +41,6 @@ namespace OpenCAD.GUI
            // MouseMove += ModelControlMouseMove;
         }
 
-        private CoordFBO _coordFBO;
-        private PlaneFBO _planeFBO;
         private PointRenderer _points;
         public override void OnLoad(OpenGL gl)
         {
@@ -59,14 +58,12 @@ namespace OpenCAD.GUI
             _projectionUniform = gl.GetUniformLocation(_shader.Handle, "Projection");
 
             _graph = new SceneGraph();
+
             _graph.Nodes.Add(new CoordinateSystemLeaf(gl, _shader, _model.Features.OfType<CoordinateSystem>()));
+            _graph.Nodes.Add(new DatumPlaneLeaf(gl, _shader, _model.Features.OfType<DatumPlane>()));
 
 
 
-
-
-            _coordFBO = new CoordFBO(gl,_shader);
-            _planeFBO = new PlaneFBO(gl, _shader);
 
             var data = new List<Vert>();
             foreach (var section in _model.Features.OfType<Section>())
@@ -94,30 +91,7 @@ namespace OpenCAD.GUI
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
             gl.ClearColor(0.137f, 0.121f, 0.125f, 0f);
             
-
             _graph.Render();
-
-
-            //foreach (var csys in _model.Features.OfType<CoordinateSystem>())
-            //{
-            //    _camera.Model = csys.Transform;
-            //    using (new Bind(_shader))
-            //    {
-            //        gl.UniformMatrix4(_modelUniform, 1, false, _camera.Model.ToColumnMajorArray());
-            //    }
-            //    _coordFBO.Render();
-            //}
-
-            foreach (var plane in _model.Features.OfType<DatumPlane>())
-            {
-                _camera.Model = plane.Transform;
-                using (new Bind(_shader))
-                {
-                    gl.UniformMatrix4(_modelUniform, 1, false, _camera.Model.ToColumnMajorArray());
-                }
-                _planeFBO.Render();
-            }
-
 
             gl.Disable(OpenGL.GL_DEPTH_TEST);
             using (new Bind(_shader))
@@ -148,76 +122,6 @@ namespace OpenCAD.GUI
         }
     }
 
-
-    public class CoordFBO
-    {
-        private readonly IShaderProgram _shader;
-
-        private readonly VBO _vbo;
-        private readonly VAO _vao;
-
-        public CoordFBO(OpenGL gl,IShaderProgram shader)
-        {
-            _shader = shader;
-            var data = new List<Vert>();
-            const float size = 10f;
-            data.Add(new Vert(new Vect3(0, 0, 0), Vect3.Zero, Color.Blue.ToVector4()));
-            data.Add(new Vert(new Vect3(size, 0, 0), Vect3.Zero, Color.Blue.ToVector4()));
-
-            data.Add(new Vert(new Vect3(0, 0, 0), Vect3.Zero, Color.Red.ToVector4()));
-            data.Add(new Vert(new Vect3(0, size, 0), Vect3.Zero, Color.Red.ToVector4()));
-
-            data.Add(new Vert(new Vect3(0, 0, 0), Vect3.Zero, Color.Green.ToVector4()));
-            data.Add(new Vert(new Vect3(0, 0, size), Vect3.Zero, Color.Green.ToVector4()));
-
-            _vbo = new VBO(gl, BeginMode.Lines, data);
-            _vao = new VAO(gl, _shader, _vbo);
-        }
-
-        public void Render()
-        {
-            _vao.Render();
-        }
-    }
-
-
-    public class PlaneFBO
-    {
-        private readonly OpenGL _gl;
-        private readonly IShaderProgram _shader;
-        private readonly VBO _vbo;
-        private readonly VAO _vao;
-        public PlaneFBO(OpenGL gl, IShaderProgram shader)
-        {
-            _gl = gl;
-            _shader = shader;
-            var data = new List<Vert>();
-            const float size = 20f;
-            var basecolour = Color.FromArgb(50, 0, 112, 204).ToVector4();
-            data.Add(new Vert(new Vect3(-size / 2.0, -size / 2.0, 0), Vect3.Zero, basecolour));
-            data.Add(new Vert(new Vect3(size / 2.0, -size / 2.0, 0), Vect3.Zero, basecolour));
-            data.Add(new Vert(new Vect3(size / 2.0, size / 2.0, 0), Vect3.Zero, basecolour));
-            data.Add(new Vert(new Vect3(-size / 2.0, size / 2.0, 0), Vect3.Zero, basecolour));
-
-
-
-            data.Add(new Vert(new Vect3(-size / 2.0, size / 2.0, 0), Vect3.Zero, basecolour));
-            data.Add(new Vert(new Vect3(size / 2.0, size / 2.0, 0), Vect3.Zero, basecolour));
-            data.Add(new Vert(new Vect3(size / 2.0, -size / 2.0, 0), Vect3.Zero, basecolour));
-            data.Add(new Vert(new Vect3(-size / 2.0, -size / 2.0, 0), Vect3.Zero, basecolour));
-
-            _vbo = new VBO(gl, BeginMode.Quads, data);
-            _vao = new VAO(gl, _shader, _vbo);
-        }
-
-        public void Render()
-        {
-            _vao.Render();
-        }
-    }
-
-
-
     public class PointRenderer
     {
         private readonly IShaderProgram _shader;
@@ -230,39 +134,6 @@ namespace OpenCAD.GUI
             _shader = shader;
             _vbo = new VBO(gl, BeginMode.Points, data);
             _vao = new VAO(gl, _shader, _vbo);
-        }
-
-        public void Render()
-        {
-            _vao.Render();
-        }
-    }
-
-
-    public class CoordinateSystemLeaf:ILeafNode
-    {
-        private readonly IShaderProgram _shader;
-        private readonly VAO _vao;
-        private Vect4 _edgecolour = Color.FromArgb(255, 0, 112, 204).ToVector4();
-        private Vect4 _basecolour = Color.FromArgb(50, 0, 112, 204).ToVector4();
-        private const float Size = 10f;
-
-        public CoordinateSystemLeaf(OpenGL gl, IShaderProgram shader, IEnumerable<CoordinateSystem> coordinateSystems)
-        {
-            _shader = shader;
-            var data = new List<Vert>();
-
-            foreach (var csys in coordinateSystems)
-            {
-                var origin = csys.Transform.ToVect3();
-                data.Add(new Vert(origin, Vect3.Zero, Color.Blue.ToVector4()));
-                data.Add(new Vert((csys.Transform * Mat4.Translate(new Vect3(Size, 0, 0))).ToVect3(), Vect3.Zero, Color.Blue.ToVector4()));
-                data.Add(new Vert(origin, Vect3.Zero, Color.Red.ToVector4()));
-                data.Add(new Vert((csys.Transform * Mat4.Translate(new Vect3(0, Size, 0))).ToVect3(), Vect3.Zero, Color.Red.ToVector4()));
-                data.Add(new Vert(origin, Vect3.Zero, Color.Green.ToVector4()));
-                data.Add(new Vert((csys.Transform * Mat4.Translate(new Vect3(0, 0, Size))).ToVect3(), Vect3.Zero, Color.Green.ToVector4()));
-            }
-            _vao = new VAO(gl, _shader, new VBO(gl, BeginMode.Lines, data));
         }
 
         public void Render()
