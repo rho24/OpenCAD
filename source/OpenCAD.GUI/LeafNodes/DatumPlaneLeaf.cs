@@ -14,8 +14,8 @@ namespace OpenCAD.GUI.LeafNodes
         private readonly IShaderProgram _shader;
         private readonly VAO _lineVAO;
         private readonly VAO _quadVAO;
-        private Vect4 _edgecolour = Color.FromArgb(255, 0, 112, 204).ToVector4();
-        private Vect4 _basecolour = Color.FromArgb(50, 0, 112, 204).ToVector4();
+        private readonly Vect4 _edgecolour = Color.FromArgb(255, 0, 112, 204).ToVector4();
+        private readonly Vect4 _basecolour = Color.FromArgb(50, 0, 112, 204).ToVector4();
         private const float Size = 10f;
 
         public DatumPlaneLeaf(OpenGL gl, IShaderProgram shader, IEnumerable<DatumPlane> planes)

@@ -124,6 +124,7 @@
     </Compile>
     <Compile Include="LeafNodes\CoordinateSystemLeaf.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="LeafNodes\DatumPlaneLeaf.cs" />
     <Compile Include="ModelControl.cs" />
     <Page Include="CADControl.xaml">
       <SubType>Designer</SubType>

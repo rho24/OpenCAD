@@ -93,6 +93,7 @@ namespace OpenCAD.GUI
             
             _graph.Render();
 
+
             gl.Disable(OpenGL.GL_DEPTH_TEST);
             using (new Bind(_shader))
             {
