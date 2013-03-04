@@ -147,6 +147,7 @@
     <Compile Include="MvvmBootstrapper.cs" />
     <Compile Include="ViewModels\AvalonViewModelBaseBase.cs" />
     <Compile Include="ViewModels\EventAggregatorDebugViewModel.cs" />
+    <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\TempToolViewModel.cs" />
