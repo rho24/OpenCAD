@@ -1,8 +1,12 @@
-﻿namespace OpenCAD.GUI.ViewModels
+﻿using Caliburn.Micro;
+using OpenCAD.GUI.Messages;
+
+namespace OpenCAD.GUI.ViewModels
 {
-    public class ProjectExplorerViewModel : AvalonViewModelBaseBase
+    public class ProjectExplorerViewModel : AvalonViewModelBaseBase, IHandle<ProjectOpenedEvent>
     {
         private IProjectMeta _projectMeta;
+        private readonly IEventAggregator _eventAggregator;
 
         public IProjectMeta ProjectMeta {
             get { return _projectMeta; }
@@ -23,12 +27,17 @@
             get { return ProjectMeta == null; }
         }
 
-        public ProjectExplorerViewModel() {
+        public ProjectExplorerViewModel(IEventAggregator eventAggregator) {
+            _eventAggregator = eventAggregator;
             Title = "Project Explorer";
         }
 
         public void LoadProject() {
-            ProjectMeta = new ProjectMeta();
+            _eventAggregator.Publish(new OpenProjectCommand());
+        }
+
+        public void Handle(ProjectOpenedEvent message) {
+            ProjectMeta = message.Project;
         }
     }
 }

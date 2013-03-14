@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using Caliburn.Micro;
 using OpenCAD.GUI.Messages;
 
 namespace OpenCAD.GUI.ViewModels
@@ -9,7 +10,10 @@ namespace OpenCAD.GUI.ViewModels
 
         public BindableCollection<MenuItemViewModel> Items { get; set; }
 
-        public MenuViewModel(IEventAggregator eventAggregator) {
+        public MenuViewModel(IEventAggregator eventAggregator,
+                             Func<ProjectExplorerViewModel> projectExplorerViewModelBuilder,
+                             Func<EventAggregatorDebugViewModel> eventsDebugBuilder,
+                             Func<TeapotViewModel> teapotBuilder) {
             _eventAggregator = eventAggregator;
             Items = new BindableCollection<MenuItemViewModel> {
                 new MenuItemViewModel {
@@ -18,22 +22,17 @@ namespace OpenCAD.GUI.ViewModels
                         new MenuItemViewModel {
                             Header = "Open Teapot",
                             Action = () =>
-                                     _eventAggregator.Publish(new AddTabViewCommand {Model = new TeapotViewModel {Title = "Teapot Demo"}})
-                        },
-                        new MenuItemViewModel {
-                            Header = "Open Temp Tool",
-                            Action = () =>
-                                     _eventAggregator.Publish(new AddToolViewCommand {Model = new TempToolViewModel {Title = "Temp tool"}})
+                                     _eventAggregator.Publish(new AddTabViewCommand {Model = teapotBuilder()})
                         },
                         new MenuItemViewModel {
                             Header = "Open Events Tool",
                             Action = () =>
-                                     _eventAggregator.Publish(new AddToolViewCommand {Model = new EventAggregatorDebugViewModel(_eventAggregator) {Title = "Events"}})
+                                     _eventAggregator.Publish(new AddToolViewCommand {Model = eventsDebugBuilder()})
                         },
                         new MenuItemViewModel {
                             Header = "Open Project Explorer",
                             Action = () =>
-                                     _eventAggregator.Publish(new AddToolViewCommand {Model = new ProjectExplorerViewModel()})
+                                     _eventAggregator.Publish(new AddToolViewCommand {Model = projectExplorerViewModelBuilder()})
                         }
                     }
                 },

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Threading;
+using Autofac;
 using Caliburn.Micro;
 using Caliburn.Micro.Autofac;
+using OpenCAD.GUI.Infrastructure;
 using OpenCAD.GUI.ViewModels;
 
 namespace OpenCAD.GUI
@@ -49,6 +51,10 @@ namespace OpenCAD.GUI
                         convention.GetBindableProperty(frameworkElement));
                 }
             }
+        }
+
+        protected override void ConfigureContainer(ContainerBuilder builder) {
+            builder.RegisterType<ProjectManager>().AsSelf().SingleInstance();
         }
 
         protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {

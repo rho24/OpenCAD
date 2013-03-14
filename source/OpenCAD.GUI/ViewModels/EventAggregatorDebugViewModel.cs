@@ -7,6 +7,7 @@ namespace OpenCAD.GUI.ViewModels
         public BindableCollection<object> Events { get; set; }
         
         public EventAggregatorDebugViewModel(IEventAggregator eventAggregator) {
+            Title = "Events Debug";
             Events = new BindableCollection<object>();
             eventAggregator.Subscribe(this);
         }

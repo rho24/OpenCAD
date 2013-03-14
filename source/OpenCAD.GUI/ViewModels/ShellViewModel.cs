@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Reactive.Linq;
 using AvalonDock;
 using Caliburn.Micro;
+using OpenCAD.GUI.Infrastructure;
 using OpenCAD.GUI.Messages;
 
 namespace OpenCAD.GUI.ViewModels
@@ -10,6 +11,7 @@ namespace OpenCAD.GUI.ViewModels
     public class ShellViewModel : Conductor<Screen>, IHandle<AddTabViewCommand>, IHandle<AddToolViewCommand>
     {
         private readonly IEventAggregator _eventAggregator;
+        private readonly ProjectManager _projectManager;
         private PropertyChangedBase _activeDocument;
 
         public PropertyChangedBase ActiveDocument {
@@ -26,12 +28,17 @@ namespace OpenCAD.GUI.ViewModels
         public MenuViewModel Menu { get; set; }
 
 
-        public ShellViewModel(IEventAggregator eventAggregator, MenuViewModel menu) {
+        public ShellViewModel(IEventAggregator eventAggregator,
+                              MenuViewModel menu,
+                              Func<ProjectExplorerViewModel> projectExplorerViewModelBuilder,
+                              ProjectManager projectManager,
+                              Func<EventAggregatorDebugViewModel> eventsDebugBuilder) {
             _eventAggregator = eventAggregator;
+            _projectManager = projectManager;
             Tabs = new BindableCollection<PropertyChangedBase>();
             Tools = new BindableCollection<PropertyChangedBase> {
-                new ProjectExplorerViewModel(),
-                new EventAggregatorDebugViewModel(eventAggregator) {Title = "Event Debugger"}
+                projectExplorerViewModelBuilder(),
+                eventsDebugBuilder()
             };
             Menu = menu;
 
