@@ -8,7 +8,7 @@ namespace OpenCAD.GUI.ViewModels
     {
         string Name { get; }
 
-        ReadOnlyObservableCollection<IPartMeta> Parts { get; }
+        ReadOnlyObservableCollection<PartMeta> Parts { get; }
     }
 
     public interface IPartMeta : INotifyPropertyChanged
@@ -18,19 +18,28 @@ namespace OpenCAD.GUI.ViewModels
 
     public class ProjectMeta : PropertyChangedBase, IProjectMeta
     {
-        public string Name {
-            get { return "temp proj"; }
+        private ObservableCollection<PartMeta> _parts;
+        private ReadOnlyObservableCollection<PartMeta> _readOnlyParts;
+
+        public ObservableCollection<PartMeta> Parts {
+            get { return _parts; }
+            set {
+                if (Equals(value, _parts)) return;
+                _parts = value;
+                _readOnlyParts = new ReadOnlyObservableCollection<PartMeta>(value); //TODO: Need covariant/contravariant version
+                NotifyOfPropertyChange(() => Parts);
+            }
         }
 
-        public ReadOnlyObservableCollection<IPartMeta> Parts {
-            get { return new ReadOnlyObservableCollection<IPartMeta>(new ObservableCollection<IPartMeta>(new[] {new PartMeta()})); }
+        public string Name { get; set; }
+
+        ReadOnlyObservableCollection<PartMeta> IProjectMeta.Parts {
+            get { return _readOnlyParts; }
         }
     }
 
     public class PartMeta : PropertyChangedBase, IPartMeta
     {
-        public string Name {
-            get { return "temp part"; }
-        }
+        public string Name { get; set; }
     }
 }

@@ -72,6 +72,9 @@
     <Reference Include="Caliburn.Micro.Autofac">
       <HintPath>..\packages\Caliburn.Micro.Autofac.1.5.0\lib\net40\Caliburn.Micro.Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\..\lib\OpenTK.dll</HintPath>
     </Reference>
@@ -138,6 +141,7 @@
     </ApplicationDefinition>
     <Compile Include="Infrastructure\AutobinderTemplate.cs" />
     <Compile Include="Infrastructure\AutobinderTemplateSelector.cs" />
+    <Compile Include="Infrastructure\DynamicLinqExtensions.cs" />
     <Compile Include="Infrastructure\ProjectManager.cs" />
     <Compile Include="Messages\AddTabViewCommand.cs" />
     <Compile Include="Messages\AddToolViewCommand.cs" />
