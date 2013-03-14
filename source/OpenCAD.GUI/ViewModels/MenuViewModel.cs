@@ -11,7 +11,7 @@ namespace OpenCAD.GUI.ViewModels
 
         public MenuViewModel(IEventAggregator eventAggregator) {
             _eventAggregator = eventAggregator;
-            Items = new BindableCollection<MenuItemViewModel>() {
+            Items = new BindableCollection<MenuItemViewModel> {
                 new MenuItemViewModel {
                     Header = "_FILE",
                     Items = new BindableCollection<MenuItemViewModel> {
@@ -29,6 +29,14 @@ namespace OpenCAD.GUI.ViewModels
                             Header = "Open Events Tool",
                             Action = () =>
                                      _eventAggregator.Publish(new AddToolViewCommand {Model = new EventAggregatorDebugViewModel(_eventAggregator) {Title = "Events"}})
+                        },
+                        new MenuItemViewModel {
+                            Header = "Open Project Explorer",
+                            Action = () =>
+                                     _eventAggregator.Publish(new AddProjectExplorerViewCommand {
+                                         Model =
+                                             new ProjectExplorerViewModel {Project = new ProjectManager {Name = "Temp project", Parts = new[] {new ProjectManager.Part {Name = "Temp part"}}}}
+                                     })
                         }
                     }
                 },

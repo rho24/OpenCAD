@@ -7,7 +7,7 @@ using OpenCAD.GUI.Messages;
 
 namespace OpenCAD.GUI.ViewModels
 {
-    public class ShellViewModel : Conductor<Screen>, IHandle<AddTabViewCommand>, IHandle<AddToolViewCommand>
+    public class ShellViewModel : Conductor<Screen>, IHandle<AddTabViewCommand>, IHandle<AddToolViewCommand>, IHandle<AddProjectExplorerViewCommand>
     {
         private readonly IEventAggregator _eventAggregator;
         private PropertyChangedBase _activeDocument;
@@ -33,6 +33,10 @@ namespace OpenCAD.GUI.ViewModels
             Menu = menu;
 
             InitializeEvents();
+        }
+
+        public void Handle(AddProjectExplorerViewCommand message) {
+            Tools.Add(message.Model);
         }
 
         public void Handle(AddTabViewCommand message) {

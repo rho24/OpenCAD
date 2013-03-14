@@ -138,6 +138,7 @@
     </ApplicationDefinition>
     <Compile Include="Infrastructure\AutobinderTemplate.cs" />
     <Compile Include="Infrastructure\AutobinderTemplateSelector.cs" />
+    <Compile Include="Messages\AddProjectExplorerViewCommand.cs" />
     <Compile Include="Messages\AddTabViewCommand.cs" />
     <Compile Include="Messages\AddToolViewCommand.cs" />
     <Compile Include="Messages\TabAddedEvent.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="ViewModels\EventAggregatorDebugViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\ProjectExplorerViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\TempToolViewModel.cs" />
     <Compile Include="Views\EventAggregatorDebugView.xaml.cs">
@@ -156,6 +158,9 @@
     </Compile>
     <Compile Include="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectExplorerView.xaml.cs">
+      <DependentUpon>ProjectExplorerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TeapotView.xaml.cs">
       <DependentUpon>TeapotView.xaml</DependentUpon>
@@ -168,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectExplorerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
