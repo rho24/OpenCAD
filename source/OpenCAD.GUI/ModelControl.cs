@@ -68,7 +68,7 @@ namespace OpenCAD.GUI
             var data = new List<Vert>();
             foreach (var section in _model.Features.OfType<Section>())
             {
-                data.AddRange(section.Points.Select(point => new Vert((section.Location.Transform*Mat4.Translate(point.ToVect3())).ToVect3(), section.Location.Normal, Color.Yellow.ToVector4())));
+                data.AddRange(section.Points.Select(point => new Vert((section.Location.Transform*Mat4.Translate(point)).ToVect3(), section.Location.Normal, Color.Yellow.ToVector4())));
             }
             _points = new PointRenderer(gl,_shader,data);
             // gl.PolygonMode(FaceMode.FrontAndBack, PolygonMode.Lines);

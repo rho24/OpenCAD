@@ -11,6 +11,7 @@ namespace OpenCAD.GUI.LeafNodes
 {
     public class DatumPlaneLeaf : ILeafNode
     {
+        private readonly OpenGL _gl;
         private readonly IShaderProgram _shader;
         private readonly VAO _lineVAO;
         private readonly VAO _quadVAO;
@@ -20,6 +21,7 @@ namespace OpenCAD.GUI.LeafNodes
 
         public DatumPlaneLeaf(OpenGL gl, IShaderProgram shader, IEnumerable<DatumPlane> planes)
         {
+            _gl = gl;
             _shader = shader;
             var linedata = new List<Vert>();
             var quaddata = new List<Vert>();
@@ -53,7 +55,9 @@ namespace OpenCAD.GUI.LeafNodes
         public void Render()
         {
             _quadVAO.Render();
+            _gl.Disable(OpenGL.GL_DEPTH_TEST);
             _lineVAO.Render();
+            _gl.Enable(OpenGL.GL_DEPTH_TEST);
         }
     }
 }

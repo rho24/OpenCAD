@@ -40,18 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contexts\Context2D.cs" />
-    <Compile Include="Contexts\Context3D.cs" />
-    <Compile Include="Contexts\IContext.cs" />
     <Compile Include="CSG\CSGNode.cs" />
     <Compile Include="CSG\Extensions.cs" />
     <Compile Include="CSG\ICSGSolid.cs" />
     <Compile Include="CSG\Polygon.cs" />
     <Compile Include="CSG\Vertex.cs" />
-    <Compile Include="Drawing\Constraining\IHasConstraints.cs" />
-    <Compile Include="Drawing\DrawingPoint.cs" />
-    <Compile Include="Drawing\IDrawingElement.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Topology\BaseEdge.cs" />
     <Compile Include="Graphics\BaseCamera.cs" />
     <Compile Include="Graphics\ICamera.cs" />
     <Compile Include="Graphics\OrthographicCamera.cs" />
@@ -83,12 +78,11 @@
     <Compile Include="Modeling\Features\IFeature.cs" />
     <Compile Include="Modeling\IModel.cs" />
     <Compile Include="Modeling\BasePart.cs" />
-    <Compile Include="Modeling\Sections\BaseEdge.cs" />
-    <Compile Include="Modeling\Sections\EdgeLine.cs" />
-    <Compile Include="Modeling\Sections\IEdge.cs" />
+    <Compile Include="Topology\LineEdge.cs" />
+    <Compile Include="Topology\IEdge.cs" />
     <Compile Include="Modeling\Sections\IEntity.cs" />
     <Compile Include="Modeling\Sections\ISection.cs" />
-    <Compile Include="Modeling\Sections\Point.cs" />
+    <Compile Include="Topology\Point.cs" />
     <Compile Include="Modeling\Sections\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\Cube.cs" />

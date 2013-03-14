@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using OpenCAD.Core.Maths;
+using OpenCAD.Core.Topology;
 
 namespace OpenCAD.Core.Modeling.Sections
 {
@@ -12,13 +8,13 @@ namespace OpenCAD.Core.Modeling.Sections
     {
         public string Name { get; private set; }
         public Plane Location { get; private set; }
-        public IList<Point> Points { get; private set; }
+        public IList<Vertex> Points { get; private set; }
 
         public Section(string name, Plane location)
         {
             Name = name;
             Location = location;
-            Points = new List<Point> { new Point(5, 0), new Point(6, 0), new Point(7, 5) };
+            Points = new List<Vertex> { new Vertex(5, 0, 0), new Vertex(6, 0, 0), new Vertex(7, 5, 0) };
         }
     }
 }
