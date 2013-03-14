@@ -7,7 +7,7 @@ using OpenCAD.GUI.Messages;
 
 namespace OpenCAD.GUI.ViewModels
 {
-    public class ShellViewModel : Conductor<Screen>, IHandle<AddTabViewCommand>, IHandle<AddToolViewCommand>, IHandle<AddProjectExplorerViewCommand>
+    public class ShellViewModel : Conductor<Screen>, IHandle<AddTabViewCommand>, IHandle<AddToolViewCommand>
     {
         private readonly IEventAggregator _eventAggregator;
         private PropertyChangedBase _activeDocument;
@@ -29,14 +29,13 @@ namespace OpenCAD.GUI.ViewModels
         public ShellViewModel(IEventAggregator eventAggregator, MenuViewModel menu) {
             _eventAggregator = eventAggregator;
             Tabs = new BindableCollection<PropertyChangedBase>();
-            Tools = new BindableCollection<PropertyChangedBase> {new EventAggregatorDebugViewModel(eventAggregator) {Title = "Event Debugger"}};
+            Tools = new BindableCollection<PropertyChangedBase> {
+                new ProjectExplorerViewModel(),
+                new EventAggregatorDebugViewModel(eventAggregator) {Title = "Event Debugger"}
+            };
             Menu = menu;
 
             InitializeEvents();
-        }
-
-        public void Handle(AddProjectExplorerViewCommand message) {
-            Tools.Add(message.Model);
         }
 
         public void Handle(AddTabViewCommand message) {

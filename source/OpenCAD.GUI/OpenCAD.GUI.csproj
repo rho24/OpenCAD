@@ -138,7 +138,6 @@
     </ApplicationDefinition>
     <Compile Include="Infrastructure\AutobinderTemplate.cs" />
     <Compile Include="Infrastructure\AutobinderTemplateSelector.cs" />
-    <Compile Include="Messages\AddProjectExplorerViewCommand.cs" />
     <Compile Include="Messages\AddTabViewCommand.cs" />
     <Compile Include="Messages\AddToolViewCommand.cs" />
     <Compile Include="Messages\TabAddedEvent.cs" />
@@ -148,6 +147,7 @@
     <Compile Include="MvvmBootstrapper.cs" />
     <Compile Include="ViewModels\AvalonViewModelBaseBase.cs" />
     <Compile Include="ViewModels\EventAggregatorDebugViewModel.cs" />
+    <Compile Include="ViewModels\IProjectMeta.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\ProjectExplorerViewModel.cs" />

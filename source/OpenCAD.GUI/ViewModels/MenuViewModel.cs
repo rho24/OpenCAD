@@ -33,10 +33,7 @@ namespace OpenCAD.GUI.ViewModels
                         new MenuItemViewModel {
                             Header = "Open Project Explorer",
                             Action = () =>
-                                     _eventAggregator.Publish(new AddProjectExplorerViewCommand {
-                                         Model =
-                                             new ProjectExplorerViewModel {Project = new ProjectManager {Name = "Temp project", Parts = new[] {new ProjectManager.Part {Name = "Temp part"}}}}
-                                     })
+                                     _eventAggregator.Publish(new AddToolViewCommand {Model = new ProjectExplorerViewModel()})
                         }
                     }
                 },
