@@ -1,6 +1,7 @@
 ﻿using System;
 using Caliburn.Micro;
 using OpenCAD.GUI.Messages;
+using OpenCAD.GUI.Models;
 
 namespace OpenCAD.GUI.ViewModels
 {
@@ -33,6 +34,10 @@ namespace OpenCAD.GUI.ViewModels
                             Header = "Open Project Explorer",
                             Action = () =>
                                      _eventAggregator.Publish(new AddToolViewCommand {Model = projectExplorerViewModelBuilder()})
+                        },
+                        new MenuItemViewModel {
+                            Header = "Add part",
+                            Action = () => _eventAggregator.Publish(new AddPartCommand {Part = new JsonPartMeta {FilePath = @"C:\temp\OpenCad\temp.cadpart"}})
                         }
                     }
                 },

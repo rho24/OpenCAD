@@ -3,6 +3,6 @@ using System.Collections.Specialized;
 
 namespace OpenCAD.GUI.Misc
 {
-    public interface IReadOnlyObservableCollection<T>: ICollection<T>, INotifyCollectionChanged
+    public interface IReadOnlyObservableCollection<out T>: IEnumerable<T>, INotifyCollectionChanged
     {}
 }

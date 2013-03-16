@@ -139,6 +139,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Messages\AddPartCommand.cs" />
     <Compile Include="Misc\AutobinderTemplateSelector.cs" />
     <Compile Include="Misc\IReadOnlyObservableCollection.cs" />
     <Compile Include="Misc\MyReadOnlyObservableCollection.cs" />

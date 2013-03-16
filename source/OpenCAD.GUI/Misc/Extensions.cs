@@ -18,8 +18,8 @@ namespace OpenCAD.GUI.Misc
             }
         }
 
-        public static IReadOnlyObservableCollection<Tout> WrapReadOnly<Tin, Tout>(this ObservableCollection<Tin> list) where Tin : class, Tout {
-            return new MyReadOnlyObservableCollection<Tout, Tin>(list);
+        public static IReadOnlyObservableCollection<TResult> WrapReadOnly<TSource, TResult>(this ObservableCollection<TSource> list) where TSource : TResult {
+            return new MyReadOnlyObservableCollection<TSource, TResult>(list);
         }
     }
 }
