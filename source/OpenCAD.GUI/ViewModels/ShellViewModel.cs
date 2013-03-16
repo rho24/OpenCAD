@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Reactive.Linq;
 using AvalonDock;
 using Caliburn.Micro;
-using OpenCAD.GUI.Infrastructure;
+using OpenCAD.GUI.Misc;
 using OpenCAD.GUI.Messages;
 
 namespace OpenCAD.GUI.ViewModels

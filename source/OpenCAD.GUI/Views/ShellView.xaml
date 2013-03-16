@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:avalonDock="http://avalondock.codeplex.com"
         xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
-        xmlns:Infrastructure="clr-namespace:OpenCAD.GUI.Infrastructure"
+        xmlns:Infrastructure="clr-namespace:OpenCAD.GUI.Misc"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         Title="MainWindow" Height="500" Width="800">
     <DockPanel>

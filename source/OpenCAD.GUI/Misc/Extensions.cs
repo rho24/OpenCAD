@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
-namespace OpenCAD.GUI.Infrastructure
+namespace OpenCAD.GUI.Misc
 {
-    public static class DynamicLinqExtensions
+    public static class Extensions
     {
         public static IEnumerable<dynamic> Select(this object source, Func<dynamic, dynamic> map) {
             foreach (dynamic item in source as dynamic)
@@ -15,6 +16,10 @@ namespace OpenCAD.GUI.Infrastructure
                 if (predicate(item))
                     yield return item;
             }
+        }
+
+        public static IReadOnlyObservableCollection<Tout> WrapReadOnly<Tin, Tout>(this ObservableCollection<Tin> list) where Tin : class, Tout {
+            return new MyReadOnlyObservableCollection<Tout, Tin>(list);
         }
     }
 }

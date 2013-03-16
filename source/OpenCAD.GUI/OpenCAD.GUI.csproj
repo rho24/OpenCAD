@@ -139,10 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Infrastructure\AutobinderTemplate.cs" />
-    <Compile Include="Infrastructure\AutobinderTemplateSelector.cs" />
-    <Compile Include="Infrastructure\DynamicLinqExtensions.cs" />
-    <Compile Include="Infrastructure\ProjectManager.cs" />
+    <Compile Include="Misc\AutobinderTemplateSelector.cs" />
+    <Compile Include="Misc\IReadOnlyObservableCollection.cs" />
+    <Compile Include="Misc\MyReadOnlyObservableCollection.cs" />
+    <Compile Include="Misc\ProjectManager.cs" />
     <Compile Include="Messages\AddTabViewCommand.cs" />
     <Compile Include="Messages\AddToolViewCommand.cs" />
     <Compile Include="Messages\OpenProjectCommand.cs" />
@@ -151,6 +151,8 @@
     <Compile Include="Messages\TabRemovedEvent.cs" />
     <Compile Include="Messages\ToolAddedEvent.cs" />
     <Compile Include="Messages\ToolRemovedEvent.cs" />
+    <Compile Include="Misc\AutobinderTemplate.cs" />
+    <Compile Include="Misc\Extensions.cs" />
     <Compile Include="Models\JsonPartMeta.cs" />
     <Compile Include="Models\ProjectMeta.cs" />
     <Compile Include="MvvmBootstrapper.cs" />

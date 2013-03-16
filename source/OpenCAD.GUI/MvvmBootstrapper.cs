@@ -5,7 +5,7 @@ using System.Windows.Threading;
 using Autofac;
 using Caliburn.Micro;
 using Caliburn.Micro.Autofac;
-using OpenCAD.GUI.Infrastructure;
+using OpenCAD.GUI.Misc;
 using OpenCAD.GUI.ViewModels;
 
 namespace OpenCAD.GUI

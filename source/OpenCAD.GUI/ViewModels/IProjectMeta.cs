@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using OpenCAD.GUI.Models;
+using OpenCAD.GUI.Misc;
 
 namespace OpenCAD.GUI.ViewModels
 {
@@ -9,7 +8,7 @@ namespace OpenCAD.GUI.ViewModels
     {
         string Name { get; }
 
-        ReadOnlyObservableCollection<JsonPartMeta> Parts { get; }
+        IReadOnlyObservableCollection<IPartMeta> Parts { get; }
     }
 
     public interface IPartMeta : INotifyPropertyChanged

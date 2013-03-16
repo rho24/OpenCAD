@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using OpenCAD.GUI.Messages;
 using OpenCAD.GUI.Models;
 
-namespace OpenCAD.GUI.Infrastructure
+namespace OpenCAD.GUI.Misc
 {
     public class ProjectManager : IHandle<OpenProjectCommand>
     {

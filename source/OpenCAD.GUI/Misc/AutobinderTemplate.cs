@@ -1,6 +1,6 @@
-﻿using System.Windows;
+using System.Windows;
 
-namespace OpenCAD.GUI.Infrastructure
+namespace OpenCAD.GUI.Misc
 {
     public class AutobinderTemplate : DataTemplate
     {

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace OpenCAD.GUI.Infrastructure
+namespace OpenCAD.GUI.Misc
 {
     public class AutobinderTemplateSelector : DataTemplateSelector
     {
