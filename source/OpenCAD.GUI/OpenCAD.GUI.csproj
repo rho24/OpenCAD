@@ -151,6 +151,8 @@
     <Compile Include="Messages\TabRemovedEvent.cs" />
     <Compile Include="Messages\ToolAddedEvent.cs" />
     <Compile Include="Messages\ToolRemovedEvent.cs" />
+    <Compile Include="Models\JsonPartMeta.cs" />
+    <Compile Include="Models\ProjectMeta.cs" />
     <Compile Include="MvvmBootstrapper.cs" />
     <Compile Include="ViewModels\AvalonViewModelBaseBase.cs" />
     <Compile Include="ViewModels\EventAggregatorDebugViewModel.cs" />

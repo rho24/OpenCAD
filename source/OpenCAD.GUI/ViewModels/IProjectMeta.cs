@@ -1,6 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Caliburn.Micro;
+using OpenCAD.GUI.Models;
 
 namespace OpenCAD.GUI.ViewModels
 {
@@ -8,38 +9,14 @@ namespace OpenCAD.GUI.ViewModels
     {
         string Name { get; }
 
-        ReadOnlyObservableCollection<PartMeta> Parts { get; }
+        ReadOnlyObservableCollection<JsonPartMeta> Parts { get; }
     }
 
     public interface IPartMeta : INotifyPropertyChanged
     {
         string Name { get; }
-    }
-
-    public class ProjectMeta : PropertyChangedBase, IProjectMeta
-    {
-        private ObservableCollection<PartMeta> _parts;
-        private ReadOnlyObservableCollection<PartMeta> _readOnlyParts;
-
-        public ObservableCollection<PartMeta> Parts {
-            get { return _parts; }
-            set {
-                if (Equals(value, _parts)) return;
-                _parts = value;
-                _readOnlyParts = new ReadOnlyObservableCollection<PartMeta>(value); //TODO: Need covariant/contravariant version
-                NotifyOfPropertyChange(() => Parts);
-            }
-        }
-
-        public string Name { get; set; }
-
-        ReadOnlyObservableCollection<PartMeta> IProjectMeta.Parts {
-            get { return _readOnlyParts; }
-        }
-    }
-
-    public class PartMeta : PropertyChangedBase, IPartMeta
-    {
-        public string Name { get; set; }
+        DateTime? CreatedDate { get; }
+        DateTime? ModifiedDate { get; }
+        bool Exists { get; }
     }
 }

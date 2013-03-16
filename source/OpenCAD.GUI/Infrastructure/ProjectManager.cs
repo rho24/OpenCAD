@@ -4,7 +4,7 @@ using System.Linq;
 using Caliburn.Micro;
 using Newtonsoft.Json;
 using OpenCAD.GUI.Messages;
-using OpenCAD.GUI.ViewModels;
+using OpenCAD.GUI.Models;
 
 namespace OpenCAD.GUI.Infrastructure
 {
@@ -17,9 +17,16 @@ namespace OpenCAD.GUI.Infrastructure
         }
 
         public void Handle(OpenProjectCommand message) {
-            var json = JsonConvert.DeserializeObject<dynamic>(File.ReadAllText(@"C:\temp\OpenCad\temp.cadproj"));
+            var projFilePath = @"C:\temp\OpenCad\temp.cadproj";
+            var projDirectory = Path.GetDirectoryName(projFilePath);
 
-            var project = new ProjectMeta {Name = json.Name, Parts = new ObservableCollection<PartMeta>(((object) json.Parts).Select(p => new PartMeta {Name = p.Name}).Cast<PartMeta>())};
+            var json = JsonConvert.DeserializeObject<dynamic>(File.ReadAllText(projFilePath));
+
+            var project = new ProjectMeta {
+                Name = json.Name,
+                Parts = new ObservableCollection<JsonPartMeta>(((object) json.Parts)
+                                                                   .Select(p => new JsonPartMeta {FilePath = Path.GetFullPath(Path.Combine(projDirectory, p.FilePath.ToString()))}).Cast<JsonPartMeta>())
+            };
 
             _eventAggregator.Publish(new ProjectOpenedEvent {Project = project});
         }
