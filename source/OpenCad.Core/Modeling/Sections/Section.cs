@@ -8,13 +8,13 @@ namespace OpenCAD.Core.Modeling.Sections
     {
         public string Name { get; private set; }
         public Plane Location { get; private set; }
-        public IList<Vertex> Points { get; private set; }
+       // public IList<Vertex> Points { get; private set; }
 
-        public Section(string name, Plane location)
-        {
-            Name = name;
-            Location = location;
-            Points = new List<Vertex> { new Vertex(5, 0, 0), new Vertex(6, 0, 0), new Vertex(7, 5, 0) };
-        }
+        //public Section(string name, Plane location)
+        //{
+        //    Name = name;
+        //    Location = location;
+        //    Points = new List<Vertex> { new Vertex(5, 0, 0), new Vertex(6, 0, 0), new Vertex(7, 5, 0) };
+        //}
     }
 }

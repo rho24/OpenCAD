@@ -40,13 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CSG\CSGNode.cs" />
-    <Compile Include="CSG\Extensions.cs" />
-    <Compile Include="CSG\ICSGSolid.cs" />
-    <Compile Include="CSG\Polygon.cs" />
-    <Compile Include="CSG\Vertex.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Topology\BaseEdge.cs" />
     <Compile Include="Graphics\BaseCamera.cs" />
     <Compile Include="Graphics\ICamera.cs" />
     <Compile Include="Graphics\OrthographicCamera.cs" />
@@ -62,13 +56,10 @@
     <Compile Include="Maths\Vect2.cs" />
     <Compile Include="Maths\Vect4.cs" />
     <Compile Include="Maths\Vect3.cs" />
-    <Compile Include="Meshing\Edge.cs" />
     <Compile Include="Meshing\Loaders\STL.cs" />
     <Compile Include="Meshing\MeshExtensions.cs" />
-    <Compile Include="Meshing\Face.cs" />
     <Compile Include="Meshing\HalfEdgeFace.cs" />
     <Compile Include="Meshing\HalfEdge.cs" />
-    <Compile Include="Meshing\IFace.cs" />
     <Compile Include="Meshing\Mesh.cs" />
     <Compile Include="Meshing\MeshVertex.cs" />
     <Compile Include="Modeling\Datums\CoordinateSystem.cs" />
@@ -78,17 +69,14 @@
     <Compile Include="Modeling\Features\IFeature.cs" />
     <Compile Include="Modeling\IModel.cs" />
     <Compile Include="Modeling\BasePart.cs" />
-    <Compile Include="Topology\LineEdge.cs" />
-    <Compile Include="Topology\IEdge.cs" />
+    <Compile Include="Topology\ITopology.cs" />
     <Compile Include="Modeling\Sections\IEntity.cs" />
     <Compile Include="Modeling\Sections\ISection.cs" />
-    <Compile Include="Topology\Point.cs" />
     <Compile Include="Modeling\Sections\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\Cube.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BREP\" />
     <Folder Include="Import\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

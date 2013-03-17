@@ -8,7 +8,7 @@ namespace OpenCAD.Core.Modeling.Sections
     public interface ISection:IFeature 
     {
         Plane Location { get; }
-        IList<Vertex> Points { get; } 
+        //IList<Vertex> Points { get; } 
         //IList<IEntity> Entities { get; } 
     }
 }

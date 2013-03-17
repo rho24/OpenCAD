@@ -34,7 +34,7 @@ namespace OpenCAD.GUI
             Features.Add(y);
             Features.Add(z);
 
-            Features.Add(new Section("Test Section", z));
+           // Features.Add(new Section("Test Section", z));
         }
     }
 }
