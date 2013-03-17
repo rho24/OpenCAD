@@ -40,40 +40,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contexts\Context2D.cs" />
-    <Compile Include="Contexts\Context3D.cs" />
-    <Compile Include="Contexts\IContext.cs" />
-    <Compile Include="CSG\CSGNode.cs" />
-    <Compile Include="CSG\Extensions.cs" />
-    <Compile Include="CSG\ICSGSolid.cs" />
-    <Compile Include="CSG\Polygon.cs" />
-    <Compile Include="CSG\Vertex.cs" />
-    <Compile Include="Drawing\Constraining\IHasConstraints.cs" />
-    <Compile Include="Drawing\DrawingPoint.cs" />
-    <Compile Include="Drawing\IDrawingElement.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Graphics\BaseCamera.cs" />
+    <Compile Include="Graphics\ICamera.cs" />
+    <Compile Include="Graphics\OrthographicCamera.cs" />
+    <Compile Include="Graphics\SceneGraph.cs" />
+    <Compile Include="Graphics\Vert.cs" />
     <Compile Include="Maths\Angle.cs" />
     <Compile Include="Maths\Axis.cs" />
+    <Compile Include="Maths\AxisAngle.cs" />
     <Compile Include="Maths\Mat4.cs" />
     <Compile Include="Maths\MathsHelper.cs" />
-    <Compile Include="Maths\Matrix.cs" />
     <Compile Include="Maths\Plane.cs" />
-    <Compile Include="Maths\Vector3.cs" />
-    <Compile Include="Meshing\Edge.cs" />
+    <Compile Include="Maths\Quat.cs" />
+    <Compile Include="Maths\Vect2.cs" />
+    <Compile Include="Maths\Vect4.cs" />
+    <Compile Include="Maths\Vect3.cs" />
     <Compile Include="Meshing\Loaders\STL.cs" />
     <Compile Include="Meshing\MeshExtensions.cs" />
-    <Compile Include="Meshing\Face.cs" />
     <Compile Include="Meshing\HalfEdgeFace.cs" />
     <Compile Include="Meshing\HalfEdge.cs" />
-    <Compile Include="Meshing\IFace.cs" />
     <Compile Include="Meshing\Mesh.cs" />
-    <Compile Include="Meshing\Vertex.cs" />
+    <Compile Include="Meshing\MeshVertex.cs" />
+    <Compile Include="Modeling\Datums\CoordinateSystem.cs" />
+    <Compile Include="Modeling\Datums\DatumPlane.cs" />
+    <Compile Include="Modeling\Datums\IDatum.cs" />
     <Compile Include="Modeling\IElement.cs" />
+    <Compile Include="Modeling\Features\IFeature.cs" />
+    <Compile Include="Modeling\IModel.cs" />
+    <Compile Include="Modeling\BasePart.cs" />
+    <Compile Include="Topology\ITopology.cs" />
+    <Compile Include="Modeling\Sections\IEntity.cs" />
+    <Compile Include="Modeling\Sections\ISection.cs" />
+    <Compile Include="Modeling\Sections\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shapes\Cube.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BREP\" />
+    <Folder Include="Import\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

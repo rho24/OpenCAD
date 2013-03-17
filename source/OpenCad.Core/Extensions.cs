@@ -11,7 +11,7 @@ namespace OpenCAD.Core
 {
     public static class Extensions
     {
-        public static string Format(this string format, params object[] args)
+        public static string fmt(this string format, params object[] args)
         {
             return string.Format(format, args);
         }

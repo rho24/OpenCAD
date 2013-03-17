@@ -75,12 +75,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK">
-      <HintPath>..\..\lib\OpenTK.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK.GLControl">
-      <HintPath>..\..\lib\OpenTK.GLControl.dll</HintPath>
-    </Reference>
     <Reference Include="SharpGL">
       <HintPath>..\packages\SharpGLCore.2.1.0\lib\SharpGL.dll</HintPath>
     </Reference>
@@ -139,6 +133,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Buffers\BasicShader.cs" />
+    <Compile Include="Buffers\BaseShader.cs" />
+    <Compile Include="Buffers\Bind.cs" />
+    <Compile Include="Buffers\IBuffer.cs" />
+    <Compile Include="Buffers\IShaderProgram.cs" />
+    <Compile Include="Buffers\VAO.cs" />
+    <Compile Include="Buffers\VBO.cs" />
     <Compile Include="Messages\AddPartCommand.cs" />
     <Compile Include="Misc\AutobinderTemplateSelector.cs" />
     <Compile Include="Misc\IReadOnlyObservableCollection.cs" />
@@ -167,24 +168,39 @@
     <Compile Include="Views\EventAggregatorDebugView.xaml.cs">
       <DependentUpon>EventAggregatorDebugView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MenuView.xaml.cs">
-      <DependentUpon>MenuView.xaml</DependentUpon>
+    <Compile Include="CADControl.xaml.cs">
+      <DependentUpon>CADControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProjectExplorerView.xaml.cs">
-      <DependentUpon>ProjectExplorerView.xaml</DependentUpon>
+    <Compile Include="CADDocument.xaml.cs">
+      <DependentUpon>CADDocument.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TeapotView.xaml.cs">
       <DependentUpon>TeapotView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\EventAggregatorDebugView.xaml">
+    <Page Include="CADControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CADDocument.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\ProjectExplorerView.xaml.cs">
+      <DependentUpon>ProjectExplorerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LeafNodes\CoordinateSystemLeaf.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="LeafNodes\DatumPlaneLeaf.cs" />
+    <Compile Include="ModelControl.cs" />
     <Page Include="Views\MenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProjectExplorerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventAggregatorDebugView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -224,7 +240,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="Basic.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Basic.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -251,6 +275,13 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenCAD.Core\OpenCAD.Core.csproj">
+      <Project>{acd5631c-caf2-4352-ad3b-32bbcaf0fc63}</Project>
+      <Name>OpenCAD.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

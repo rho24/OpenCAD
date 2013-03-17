@@ -300,6 +300,40 @@ namespace OpenCAD.Core.Maths
                 });
         }
 
+        public static Mat4 Scale(double s)
+        {
+            return new Mat4(new[,]
+            {
+                {s, 0, 0, 0},
+                {0, s, 0, 0},
+                {0, 0, s, 0},
+                {0, 0, 0, 1}
+            });
+        }
+
+
+        /*
+        public static Mat4 Rotate(Vect3 axis, Angle theta)
+        {
+            return new Mat4(new[,]
+                {
+                    {theta.Cos() + axis.X * axis.X * (1 - theta.Cos()), axis.X*axis.Y*(1 - theta.Cos()) - axis.Z * theta.Sin(), axis.X * axis.Z * (1 - theta.Cos()) + axis.Y*theta.Sin(), 0.0},
+                    {axis.Y*axis.X*(1-theta.Cos())+axis.Z*theta.Sin(), theta.Cos() + axis.Y * axis.Y * (1 - theta.Cos()), axis.Y * axis.Z * (1 - theta.Cos()) - axis.X*theta.Sin(), 0.0},
+                    {axis.Z*axis.X*(1-theta.Cos())-axis.Y*theta.Sin(), axis.Z*axis.Y*(1 - theta.Cos()) + axis.X * theta.Sin(), theta.Cos() + axis.Z * axis.Z * (1 - theta.Cos()), 0.0},
+                    {0.0, 0.0, 0.0, 1.0}
+                });
+        }
+
+        public static Mat4 RotateNormal(Vect3 normal)
+        {
+            var axis = Vect3.UnitZ.CrossProduct(normal);
+            var angle = Vect3.UnitZ.DotProduct(normal)/(normal.Length);
+
+            return Rotate(axis, Angle.FromRadians(angle));
+        }*/
+
+
+
         public override String ToString()
         {
             return "Matrix <4x4>:\n"
@@ -391,7 +425,7 @@ namespace OpenCAD.Core.Maths
                 }) * Translate(-eye);
         }
 
-        public static Mat4 CreatePerspectiveFieldOfView(double fovy, double aspect, double zNear, double zFar)
+        public static Mat4 CreatePerspective(double fovy, double aspect, double zNear, double zFar)
         {
             if (fovy <= 0.0 || fovy > Math.PI)
                 throw new ArgumentOutOfRangeException("fovy");
@@ -415,5 +449,21 @@ namespace OpenCAD.Core.Maths
                     {0.0, 0.0, -1, 0.0}
                 });
         }
+
+
+
+        public static Mat4 CreateOrthographic(double xMin, double xMax, double yMin, double yMax, double zMin, double zMax)
+        {
+            return new Mat4(new[,]
+            {
+                {2.0f / (xMax - xMin), 0, 0, -((xMax + xMin)/(xMax - xMin))},
+                {0, 2.0f / (yMax - yMin), 0, -((yMax + yMin)/(yMax - yMin))},
+                {0, 0, -2.0f / (zMax - zMin), -((zMax + zMin)/(zMax - zMin))},
+                {0, 0, 0, 1}
+            });
+        }
+
+
+
     }
 }

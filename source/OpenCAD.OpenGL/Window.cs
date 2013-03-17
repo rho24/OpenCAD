@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using OpenCAD.Core.CSG;
+
 using OpenCAD.Core.Meshing.Loaders;
 using OpenCAD.OpenGL.Buffers;
 using OpenCAD.OpenGL.Camera;
@@ -28,9 +28,6 @@ namespace OpenCAD.OpenGL
             _camera = new MainCamera();
 
         }
-
-
-        private ICSGSolid solid;
 
 
         private IShaderProgram _shader;

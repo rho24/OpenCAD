@@ -48,7 +48,6 @@ namespace OpenCAD.Test.Maths
         public void MathematicalOperators()
         {
             Assert.AreEqual(_a + _c, new Vect3(6, 6, 7));
-
         }
 
     }

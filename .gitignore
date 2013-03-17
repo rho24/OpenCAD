@@ -30,10 +30,18 @@ obj/
 [Dd]ebug*/
 [Rr]elease*/
 Ankh.NoLoad
+_UpgradeReport_Files/
+UpgradeLog.XML
+UpgradeLog.htm
+Backup/
+[Pp]ackages/
 
 #Tooling
 _ReSharper*/
 *.resharper
+*.dotCover
+*.ncrunchsolution
+*.ncrunchproject
 [Tt]est[Rr]esult*
 
 #Project files
@@ -42,10 +50,9 @@ _ReSharper*/
 #Subversion files
 .svn
 
-# Office Temp Files
+#Office Temp Files
 ~$*
 
-opengl32.pdb
-opengl32.dll
-
-*.ncrunch*
+#Logs
+*.Log
+*.InstallLog

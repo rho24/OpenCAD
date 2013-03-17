@@ -22,6 +22,17 @@ namespace OpenCAD.Core.Maths
             Radians = radians;
         }
 
+        public double Cos()
+        {
+            return Math.Cos(Radians);
+        }
+
+        public double Sin()
+        {
+            return Math.Sin(Radians);
+        }
+
+
         public static Angle FromRadians(double radians)
         {
             return new Angle(radians);
@@ -46,6 +57,8 @@ namespace OpenCAD.Core.Maths
         {
             get { return FromRadians(Math.PI * 2.0); }
         }
+
+
 
         public static Angle operator +(Angle a1, Angle a2)
         {
@@ -76,6 +89,7 @@ namespace OpenCAD.Core.Maths
         {
             return angle.Radians;
         }
+
 
 
 
