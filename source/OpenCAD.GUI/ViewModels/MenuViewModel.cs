@@ -21,6 +21,11 @@ namespace OpenCAD.GUI.ViewModels
                     Header = "_FILE",
                     Items = new BindableCollection<MenuItemViewModel> {
                         new MenuItemViewModel {
+                            Header = "New Project",
+                            Action = () =>
+                                     _eventAggregator.Publish(new NewProjectDialogCommand())
+                        },
+                        new MenuItemViewModel {
                             Header = "Open Teapot",
                             Action = () =>
                                      _eventAggregator.Publish(new AddTabViewCommand {Model = teapotBuilder()})

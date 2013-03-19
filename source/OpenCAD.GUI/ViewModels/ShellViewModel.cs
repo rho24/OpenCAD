@@ -3,15 +3,17 @@ using System.Collections.Specialized;
 using System.Reactive.Linq;
 using AvalonDock;
 using Caliburn.Micro;
-using OpenCAD.GUI.Misc;
 using OpenCAD.GUI.Messages;
+using OpenCAD.GUI.Misc;
 
 namespace OpenCAD.GUI.ViewModels
 {
-    public class ShellViewModel : Conductor<Screen>, IHandle<AddTabViewCommand>, IHandle<AddToolViewCommand>
+    public class ShellViewModel : Conductor<Screen>, IHandle<AddTabViewCommand>, IHandle<AddToolViewCommand>, IHandle<NewProjectDialogCommand>
     {
         private readonly IEventAggregator _eventAggregator;
+        private readonly Func<NewProjectDialogViewModel> _newProjectDialogViewModelBilder;
         private readonly ProjectManager _projectManager;
+        private readonly IWindowManager _windowManager;
         private PropertyChangedBase _activeDocument;
 
         public PropertyChangedBase ActiveDocument {
@@ -29,12 +31,15 @@ namespace OpenCAD.GUI.ViewModels
 
 
         public ShellViewModel(IEventAggregator eventAggregator,
+                              IWindowManager windowManager,
                               MenuViewModel menu,
                               Func<ProjectExplorerViewModel> projectExplorerViewModelBuilder,
                               ProjectManager projectManager,
-                              Func<EventAggregatorDebugViewModel> eventsDebugBuilder) {
+                              Func<EventAggregatorDebugViewModel> eventsDebugBuilder, Func<NewProjectDialogViewModel> newProjectDialogViewModelBilder) {
             _eventAggregator = eventAggregator;
+            _windowManager = windowManager;
             _projectManager = projectManager;
+            _newProjectDialogViewModelBilder = newProjectDialogViewModelBilder;
             Tabs = new BindableCollection<PropertyChangedBase>();
             Tools = new BindableCollection<PropertyChangedBase> {
                 projectExplorerViewModelBuilder(),
@@ -52,6 +57,10 @@ namespace OpenCAD.GUI.ViewModels
 
         public void Handle(AddToolViewCommand message) {
             Tools.Add(message.Model);
+        }
+
+        public void Handle(NewProjectDialogCommand message) {
+            _windowManager.ShowDialog(_newProjectDialogViewModelBilder());
         }
 
         private void InitializeEvents() {

@@ -8,7 +8,7 @@ using OpenCAD.GUI.Models;
 
 namespace OpenCAD.GUI.Misc
 {
-    public class ProjectManager : IHandle<OpenProjectCommand>, IHandle<AddPartCommand>
+    public class ProjectManager : IHandle<OpenProjectCommand>, IHandle<AddPartCommand>, IHandle<CreateNewProjectCommand>
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -23,6 +23,17 @@ namespace OpenCAD.GUI.Misc
                 return;
 
             Project.Parts.Add(message.Part);
+        }
+
+        public void Handle(CreateNewProjectCommand message) {
+            var project = new ProjectMeta {
+                Name = message.Name,
+                Parts = new ObservableCollection<JsonPartMeta>()
+            };
+
+            Project = project;
+
+            _eventAggregator.Publish(new ProjectOpenedEvent {Project = project});
         }
 
         public void Handle(OpenProjectCommand message) {

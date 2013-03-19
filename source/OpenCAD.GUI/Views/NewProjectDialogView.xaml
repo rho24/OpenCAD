@@ -1,0 +1,22 @@
+﻿<Window x:Class="OpenCAD.GUI.Views.NewProjectDialogView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="New Project" Height="300" Width="300">
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+            <Button Name="Cancel" Content="Cancel" IsCancel="True" />
+            <Button Name="Ok" Content="Ok" IsDefault="true" />
+        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label>Project Name</Label>
+            <TextBox Name="Name" Grid.Column="2" />
+        </Grid>
+    </DockPanel>
+</Window>
