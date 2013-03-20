@@ -6,12 +6,12 @@ namespace OpenCAD.GUI.Misc
 {
     public static class Extensions
     {
-        public static IEnumerable<dynamic> Select(this object source, Func<dynamic, dynamic> map) {
+        public static IEnumerable<dynamic> DynamicSelect(this object source, Func<dynamic, dynamic> map) {
             foreach (dynamic item in source as dynamic)
                 yield return map(item);
         }
 
-        public static IEnumerable<dynamic> Where(this object source, Func<dynamic, dynamic> predicate) {
+        public static IEnumerable<dynamic> DynamicWhere(this object source, Func<dynamic, dynamic> predicate) {
             foreach (dynamic item in source as dynamic) {
                 if (predicate(item))
                     yield return item;

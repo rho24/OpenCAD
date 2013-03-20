@@ -1,5 +1,5 @@
 ﻿namespace OpenCAD.GUI.Messages
 {
-    public class NewProjectDialogCommand
+    public class NewProjectCommand
     {}
 }

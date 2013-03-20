@@ -141,8 +141,7 @@
     <Compile Include="Buffers\VAO.cs" />
     <Compile Include="Buffers\VBO.cs" />
     <Compile Include="Messages\AddPartCommand.cs" />
-    <Compile Include="Messages\CreateNewProjectCommand.cs" />
-    <Compile Include="Messages\NewProjectDialogCommand.cs" />
+    <Compile Include="Messages\NewProjectCommand.cs" />
     <Compile Include="Messages\SaveProjectCommand.cs" />
     <Compile Include="Misc\AutobinderTemplateSelector.cs" />
     <Compile Include="Misc\IReadOnlyObservableCollection.cs" />
@@ -166,7 +165,6 @@
     <Compile Include="ViewModels\IProjectMeta.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
-    <Compile Include="ViewModels\NewProjectDialogViewModel.cs" />
     <Compile Include="ViewModels\ProjectExplorerViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\EventAggregatorDebugView.xaml.cs">
@@ -177,9 +175,6 @@
     </Compile>
     <Compile Include="CADDocument.xaml.cs">
       <DependentUpon>CADDocument.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NewProjectDialogView.xaml.cs">
-      <DependentUpon>NewProjectDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TeapotView.xaml.cs">
       <DependentUpon>TeapotView.xaml</DependentUpon>
@@ -200,10 +195,6 @@
     <Compile Include="LeafNodes\DatumPlaneLeaf.cs" />
     <Compile Include="ModelControl.cs" />
     <Page Include="Views\MenuView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\NewProjectDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,10 +8,9 @@ using OpenCAD.GUI.Misc;
 
 namespace OpenCAD.GUI.ViewModels
 {
-    public class ShellViewModel : Conductor<Screen>, IHandle<AddTabViewCommand>, IHandle<AddToolViewCommand>, IHandle<NewProjectDialogCommand>
+    public class ShellViewModel : Conductor<Screen>, IHandle<AddTabViewCommand>, IHandle<AddToolViewCommand>
     {
         private readonly IEventAggregator _eventAggregator;
-        private readonly Func<NewProjectDialogViewModel> _newProjectDialogViewModelBilder;
         private readonly ProjectManager _projectManager;
         private readonly IWindowManager _windowManager;
         private PropertyChangedBase _activeDocument;
@@ -35,11 +34,10 @@ namespace OpenCAD.GUI.ViewModels
                               MenuViewModel menu,
                               Func<ProjectExplorerViewModel> projectExplorerViewModelBuilder,
                               ProjectManager projectManager,
-                              Func<EventAggregatorDebugViewModel> eventsDebugBuilder, Func<NewProjectDialogViewModel> newProjectDialogViewModelBilder) {
+                              Func<EventAggregatorDebugViewModel> eventsDebugBuilder) {
             _eventAggregator = eventAggregator;
             _windowManager = windowManager;
             _projectManager = projectManager;
-            _newProjectDialogViewModelBilder = newProjectDialogViewModelBilder;
             Tabs = new BindableCollection<PropertyChangedBase>();
             Tools = new BindableCollection<PropertyChangedBase> {
                 projectExplorerViewModelBuilder(),
@@ -57,10 +55,6 @@ namespace OpenCAD.GUI.ViewModels
 
         public void Handle(AddToolViewCommand message) {
             Tools.Add(message.Model);
-        }
-
-        public void Handle(NewProjectDialogCommand message) {
-            _windowManager.ShowDialog(_newProjectDialogViewModelBilder());
         }
 
         private void InitializeEvents() {

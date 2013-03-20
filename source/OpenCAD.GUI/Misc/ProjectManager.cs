@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using Caliburn.Micro;
@@ -9,7 +8,7 @@ using OpenCAD.GUI.Models;
 
 namespace OpenCAD.GUI.Misc
 {
-    public class ProjectManager : IHandle<OpenProjectCommand>, IHandle<AddPartCommand>, IHandle<CreateNewProjectCommand>, IHandle<SaveProjectCommand>
+    public class ProjectManager : IHandle<OpenProjectCommand>, IHandle<AddPartCommand>, IHandle<NewProjectCommand>, IHandle<SaveProjectCommand>
     {
         private readonly IEventAggregator _eventAggregator;
 
@@ -26,7 +25,7 @@ namespace OpenCAD.GUI.Misc
             Project.Parts.Add(message.Part);
         }
 
-        public void Handle(CreateNewProjectCommand message) {
+        public void Handle(NewProjectCommand message) {
             var systemTempProjDir = @"C:\temp\OpenCAD\TempProjects";
             if (!Directory.Exists(systemTempProjDir))
                 Directory.CreateDirectory(systemTempProjDir);
@@ -35,19 +34,24 @@ namespace OpenCAD.GUI.Misc
             Directory.CreateDirectory(tempProjDir);
 
             var tempProjFile = Path.Combine(tempProjDir, "TempProject.cadproj");
-            File.WriteAllText(tempProjFile, JsonConvert.SerializeObject(new {Parts = new object[0]}));
 
+            SaveProject(new ProjectMeta {FilePath = tempProjFile});
             OpenProject(tempProjFile);
         }
 
         public void Handle(OpenProjectCommand message) {
             var projFilePath = @"C:\temp\OpenCAD\Projects\Temp\temp.cadproj";
-            
+
             OpenProject(projFilePath);
         }
 
         public void Handle(SaveProjectCommand message) {
             SaveProject(Project);
+        }
+
+        private void SaveProject(ProjectMeta project) {
+            var jsonRepresenation = new {Parts = project.Parts.Select(p => new {p.FilePath})};
+            File.WriteAllText(project.FilePath, JsonConvert.SerializeObject(jsonRepresenation, Formatting.Indented));
         }
 
         private void OpenProject(string projectFileName) {
@@ -58,16 +62,12 @@ namespace OpenCAD.GUI.Misc
             var project = new ProjectMeta {
                 FilePath = projectFileName,
                 Parts = new ObservableCollection<JsonPartMeta>(((object) json.Parts)
-                                                                   .Select(p => new JsonPartMeta {FilePath = Path.GetFullPath(Path.Combine(projDirectory, p.FilePath.ToString()))}).Cast<JsonPartMeta>())
+                                                                   .DynamicSelect(p => new JsonPartMeta {FilePath = Path.GetFullPath(Path.Combine(projDirectory, p.FilePath.ToString()))})
+                                                                   .Cast<JsonPartMeta>())
             };
             Project = project;
 
             _eventAggregator.Publish(new ProjectOpenedEvent {Project = project});
-        }
-
-        private void SaveProject(ProjectMeta project) {
-            if (!project.Exists)
-                throw new InvalidOperationException("Project file does not exist");
         }
     }
 }

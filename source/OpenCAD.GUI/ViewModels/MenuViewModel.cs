@@ -23,7 +23,12 @@ namespace OpenCAD.GUI.ViewModels
                         new MenuItemViewModel {
                             Header = "New Project",
                             Action = () =>
-                                     _eventAggregator.Publish(new NewProjectDialogCommand())
+                                     _eventAggregator.Publish(new NewProjectCommand())
+                        },
+                        new MenuItemViewModel {
+                            Header = "Save Project",
+                            Action = () =>
+                                     _eventAggregator.Publish(new SaveProjectCommand())
                         },
                         new MenuItemViewModel {
                             Header = "Open Teapot",

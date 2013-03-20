@@ -10,7 +10,6 @@ namespace OpenCAD.GUI.Models
     public class ProjectMeta : PropertyChangedBase, IProjectMeta
     {
         private string _filePath;
-        private string _name;
         private ObservableCollection<JsonPartMeta> _parts;
         private IReadOnlyObservableCollection<IPartMeta> _readOnlyParts;
 
@@ -38,6 +37,10 @@ namespace OpenCAD.GUI.Models
 
         public string FileName {
             get { return Path.GetFileName(FilePath); }
+        }
+
+        public ProjectMeta() {
+            Parts = new ObservableCollection<JsonPartMeta>();
         }
 
         public bool Exists {
