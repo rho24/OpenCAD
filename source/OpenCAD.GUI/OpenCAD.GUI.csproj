@@ -143,6 +143,7 @@
     <Compile Include="Messages\AddPartCommand.cs" />
     <Compile Include="Messages\CreateNewProjectCommand.cs" />
     <Compile Include="Messages\NewProjectDialogCommand.cs" />
+    <Compile Include="Messages\SaveProjectCommand.cs" />
     <Compile Include="Misc\AutobinderTemplateSelector.cs" />
     <Compile Include="Misc\IReadOnlyObservableCollection.cs" />
     <Compile Include="Misc\MyReadOnlyObservableCollection.cs" />

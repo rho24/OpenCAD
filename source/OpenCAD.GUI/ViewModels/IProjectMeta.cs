@@ -7,6 +7,9 @@ namespace OpenCAD.GUI.ViewModels
     public interface IProjectMeta : INotifyPropertyChanged
     {
         string Name { get; }
+        DateTime? CreatedDate { get; }
+        DateTime? ModifiedDate { get; }
+        bool Exists { get; }
 
         IReadOnlyObservableCollection<IPartMeta> Parts { get; }
     }
